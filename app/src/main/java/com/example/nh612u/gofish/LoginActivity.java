@@ -15,7 +15,7 @@ public class LoginActivity extends AppCompatActivity {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         //mDbHelper.onUpgrade(db, 3, 4);
        // mDbHelper.onCreate(db);
-        Log.wtf("Does exist?", Integer.toString(mDbHelper.addData(db, "1", "nate", "hager", "nghager@ncsu.edu")));
+        Log.wtf("Does exist?", Long.toString(mDbHelper.addData(db, "1", "nate", "hager", "nghager@ncsu.edu")));
         Log.wtf("Returned name", mDbHelper.getData(db));
     }
 }

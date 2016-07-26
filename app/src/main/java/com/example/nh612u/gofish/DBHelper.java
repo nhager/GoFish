@@ -10,6 +10,8 @@ import android.util.Log;
 
 /**
  * Created by nh612u on 7/26/2016.
+ * Used to modify and create the DB
+ * Can also be used to drop tables
  */
 public class DBHelper  extends SQLiteOpenHelper {
 
@@ -55,7 +57,7 @@ public class DBHelper  extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
-    public int addData(SQLiteDatabase db, String ID, String first, String last, String email){
+    public long addData(SQLiteDatabase db, String ID, String first, String last, String email){
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
@@ -76,19 +78,19 @@ public class DBHelper  extends SQLiteOpenHelper {
                 FeedEntry.TABLE_NAME,
                 FeedEntry.COLUMN_NAME_NULLABLE,
                 values);
-        return 1;
+        c.close();
+        return newRowId;
     }
 
     public String getData(SQLiteDatabase db){
-        String sortOrder =
-                FeedEntry.COLUMN_NAME_USER_ID + " DESC";
-        String[] args = {"nate"};
         String select = "SELECT * FROM " + FeedEntry.TABLE_NAME + " WHERE " + FeedEntry.COLUMN_NAME_FIRST
                 + "=" + "'nate'";
         Cursor c = db.rawQuery(select, null);
         c.moveToFirst();
         Log.wtf("Returned tuplets", Integer.toString(c.getCount()));
-        return c.getString(c.getColumnIndex(FeedEntry.COLUMN_NAME_LAST)); //c.getString(c.getColumnIndex(FeedEntry.COLUMN_NAME_FIRST));
+        String temp = c.getString(c.getColumnIndex(FeedEntry.COLUMN_NAME_LAST));
+        c.close();
+        return temp; //c.getString(c.getColumnIndex(FeedEntry.COLUMN_NAME_FIRST));
     }
 
 }
