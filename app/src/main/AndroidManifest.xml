@@ -19,7 +19,8 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Delete"></activity>
+        <activity android:name=".DeleteActivity" />
+        <activity android:name=".Admin_Activity"></activity>
     </application>
 
 </manifest>

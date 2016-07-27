@@ -99,6 +99,12 @@ public class DBHelper  extends SQLiteOpenHelper {
                 FeedEntry.COLUMN_NAME_NULLABLE,
                 values);
         c.close();
+        select = "SELECT * FROM " + FeedEntry.TABLE_NAME + " WHERE " + FeedEntry.COLUMN_NAME_FIRST
+                + "=" + "'" +first +"' " + "AND " + FeedEntry.COLUMN_NAME_LAST + "=" + "'" + last +
+                "'";
+        c = db.rawQuery(select, null);
+        c.moveToFirst();
+        Log.wtf("ID Number", c.getString(c.getColumnIndex(FeedEntry._ID)));
         return newRowId;
     }
 
@@ -120,10 +126,13 @@ public class DBHelper  extends SQLiteOpenHelper {
         Log.wtf("Testing: ", select);
         Cursor c = db.rawQuery(select, null);
         if(c.getCount() == 0){
+            c.close();
             return 1;
         }else{
+            c.close();
             return -1;
         }
+
     }
 
 }

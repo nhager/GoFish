@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Delete extends AppCompatActivity {
+public class DeleteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class Delete extends AppCompatActivity {
 
             });
         } catch(NullPointerException e) {
-
+            Log.wtf("Error:", "Null Pointer Exception thrown");
         }
         final Button deleteButton = (Button) findViewById(R.id.deleteButton);
         try {
@@ -72,7 +72,7 @@ public class Delete extends AppCompatActivity {
                 }
             });
         } catch(NullPointerException e){
-
+            Log.wtf("Error:", "Null Pointer Exception thrown");
         }
 
     }
