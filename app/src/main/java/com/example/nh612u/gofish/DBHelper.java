@@ -102,13 +102,28 @@ public class DBHelper  extends SQLiteOpenHelper {
         return newRowId;
     }
 
-    public String getData(SQLiteDatabase db, String statement){
+    public Cursor getData(SQLiteDatabase db, String statement){
         Cursor c = db.rawQuery(statement, null);
         c.moveToFirst();
         Log.wtf("Returned tuplets", Integer.toString(c.getCount()));
-        String temp = c.getString(c.getColumnIndex(FeedEntry.COLUMN_NAME_LAST));
-        c.close();
-        return temp;
+        return c;
+    }
+    public int deleteUser(SQLiteDatabase db, String first, String last){
+        String select = "DELETE FROM " + FeedEntry.TABLE_NAME + " WHERE " + FeedEntry.COLUMN_NAME_FIRST
+                + "=" + "'" +first +"' " + "AND " + FeedEntry.COLUMN_NAME_LAST + "=" + "'" + last +
+                "'";
+        db.rawQuery(select, null).moveToFirst();
+        Log.wtf("Testing: ", select);
+        select = "SELECT * FROM " + FeedEntry.TABLE_NAME + " WHERE " + FeedEntry.COLUMN_NAME_FIRST
+                + "=" + "'" +first +"' " + "AND " + FeedEntry.COLUMN_NAME_LAST + "=" + "'" + last +
+                "'";
+        Log.wtf("Testing: ", select);
+        Cursor c = db.rawQuery(select, null);
+        if(c.getCount() == 0){
+            return 1;
+        }else{
+            return -1;
+        }
     }
 
 }
