@@ -19,10 +19,16 @@ public class DBHelper  extends SQLiteOpenHelper {
     /* Inner class that defines the table contents */
     public static abstract class FeedEntry implements BaseColumns {
         public static final String TABLE_NAME = "users";
-        public static final String COLUMN_NAME_USER_ID = "userid ";
         public static final String COLUMN_NAME_FIRST = "firstname";
         public static final String COLUMN_NAME_LAST = "lastname";
+        public static final String COLUMN_NAME_ADDRESS = "address";
+        public static final String COLUMN_NAME_CITY = "city";
+        public static final String COLUMN_NAME_ZIP = "zip";
+        public static final String COLUMN_NAME_STATE = "state";
+        public static final String COLUMN_NAME_PHONE = "phone";
         public static final String COLUMN_NAME_EMAIL = "email";
+        public static final String COLUMN_NAME_PASSWORD = "password";
+        public static final String COLUMN_NAME_ROLE = "role";
         public static final String COLUMN_NAME_NULLABLE = null;
     }
     private static final String TEXT_TYPE = " TEXT";
@@ -30,10 +36,17 @@ public class DBHelper  extends SQLiteOpenHelper {
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
                     FeedEntry._ID + " INTEGER PRIMARY KEY," +
-                    FeedEntry.COLUMN_NAME_USER_ID + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_FIRST + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_LAST + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_ADDRESS + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_CITY + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_ZIP + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_STATE + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_PHONE + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_ROLE + TEXT_TYPE + COMMA_SEP +
+                    FeedEntry.COLUMN_NAME_PASSWORD + TEXT_TYPE + COMMA_SEP +
                     FeedEntry.COLUMN_NAME_EMAIL + TEXT_TYPE +
+
             " )";
 
     private static final String SQL_DELETE_ENTRIES =
@@ -57,13 +70,20 @@ public class DBHelper  extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
-    public long addData(SQLiteDatabase db, String ID, String first, String last, String email){
+    public long addDataUser(SQLiteDatabase db, String first, String last, String address,
+                            String city, String state, String Zip, String phone,
+                            String email, String pass, String role){
 
-// Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(FeedEntry.COLUMN_NAME_USER_ID, ID);
         values.put(FeedEntry.COLUMN_NAME_FIRST, first);
         values.put(FeedEntry.COLUMN_NAME_LAST, last);
+        values.put(FeedEntry.COLUMN_NAME_ADDRESS, address);
+        values.put(FeedEntry.COLUMN_NAME_CITY, city);
+        values.put(FeedEntry.COLUMN_NAME_PHONE, phone);
+        values.put(FeedEntry.COLUMN_NAME_STATE, state);
+        values.put(FeedEntry.COLUMN_NAME_ZIP, Zip);
+        values.put(FeedEntry.COLUMN_NAME_ROLE, role);
+        values.put(FeedEntry.COLUMN_NAME_PASSWORD, pass);
         values.put(FeedEntry.COLUMN_NAME_EMAIL, email);
         String select = "SELECT * FROM " + FeedEntry.TABLE_NAME + " WHERE " + FeedEntry.COLUMN_NAME_FIRST
                 + "=" + "'" +first +"' " + "AND " + FeedEntry.COLUMN_NAME_LAST + "=" + "'" + last +
@@ -82,15 +102,13 @@ public class DBHelper  extends SQLiteOpenHelper {
         return newRowId;
     }
 
-    public String getData(SQLiteDatabase db){
-        String select = "SELECT * FROM " + FeedEntry.TABLE_NAME + " WHERE " + FeedEntry.COLUMN_NAME_FIRST
-                + "=" + "'nate'";
-        Cursor c = db.rawQuery(select, null);
+    public String getData(SQLiteDatabase db, String statement){
+        Cursor c = db.rawQuery(statement, null);
         c.moveToFirst();
         Log.wtf("Returned tuplets", Integer.toString(c.getCount()));
         String temp = c.getString(c.getColumnIndex(FeedEntry.COLUMN_NAME_LAST));
         c.close();
-        return temp; //c.getString(c.getColumnIndex(FeedEntry.COLUMN_NAME_FIRST));
+        return temp;
     }
 
 }
