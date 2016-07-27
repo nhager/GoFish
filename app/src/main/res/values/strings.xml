@@ -10,6 +10,8 @@
     <string name="email">Email</string>
     <string name="enter">Enter</string>
     <string name="phone">Phone Number</string>
+    <string name="entry">Login</string>
+    <string name="usercreate">Create user</string>
     <string-array name="spinner_entries">
         <item>Veterans</item>
         <item>Volunteers</item>
