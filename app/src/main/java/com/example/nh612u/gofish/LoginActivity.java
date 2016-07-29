@@ -30,30 +30,35 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         final Button loginButton = (Button) findViewById(R.id.loginButt);
-
-        final Callback callback = new Callback() {
-            public boolean handleMessage(Message msg) {
-                Bundle bundle = msg.getData();
-                final String response = bundle.getString("response");
-                if (isLoginSuccessful(response)) {
-                    startActivity(new Intent(LoginActivity.this, Admin_Activity.class));
-                }
-                return true;
-            }
-        };
-
+        final Callback callback = getLoginCallback();
         try {
             loginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
                 public void onClick(View v) {
                     email = ((EditText)findViewById(R.id.editEmail)).getText().toString();
                     password = ((EditText)findViewById(R.id.editPassword)).getText().toString();
                     HttpHelper httpHelper = new HttpHelper(callback);
-                    httpHelper.GET(HttpHelper.TABLE.USER, "email=" + email, "password=" + password);
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.accumulate("email", email)
+                                .accumulate("password", password);
+                        httpHelper.GET(HttpHelper.TABLE.USER, jsonObject);
+                    } catch (JSONException e) {
+                        Log.wtf("Error:", "JSON Exception thrown");
+                    }
                 }
             });
         } catch(NullPointerException e) {
             Log.wtf("Error:", "Null Pointer Exception thrown");
         }
+
+        final Button registerButton = (Button) findViewById(R.id.registerButt);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, UserActivity.class));
+            }
+        });
     }
 
     private boolean isLoginSuccessful(String response) {
@@ -71,4 +76,17 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private Callback getLoginCallback() {
+        final Callback callback = new Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                if (isLoginSuccessful(response)) {
+                    startActivity(new Intent(LoginActivity.this, Admin_Activity.class));
+                }
+                return true;
+            }
+        };
+        return callback;
+    }
 }

@@ -1,6 +1,9 @@
 package com.example.nh612u.gofish;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -50,10 +58,41 @@ public class UserActivity extends AppCompatActivity {
                                 information[3], information[4], information[5], information[6],
                                 information[7], information[8], information[9])));
                     }
+                    try {
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.accumulate("firstname", information[0]);
+                        jsonObject.accumulate("lastname", information[1]);
+                        jsonObject.accumulate("address", information[2]);
+                        jsonObject.accumulate("city", information[3]);
+                        jsonObject.accumulate("state", information[4]);
+                        jsonObject.accumulate("zip", information[5]);
+                        jsonObject.accumulate("phone", information[6]);
+                        jsonObject.accumulate("email", information[7]);
+                        jsonObject.accumulate("password", information[8]);
+                        jsonObject.accumulate("role", information[9]);
+                        HttpHelper httpHelper = new HttpHelper(getCreateUserCallback());
+                        httpHelper.POST(getApplicationContext(), HttpHelper.TABLE.USER, jsonObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         } catch (java.lang.NullPointerException e){
             System.out.println("THere was an exception");
         }
+    }
+
+    private Handler.Callback getCreateUserCallback() {
+        final Handler.Callback callback = new Handler.Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                startActivity(new Intent(UserActivity.this, LoginActivity.class));
+                return true;
+            }
+        };
+        return callback;
     }
 }
