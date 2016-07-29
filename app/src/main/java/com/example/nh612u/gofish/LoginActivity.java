@@ -1,12 +1,8 @@
 package com.example.nh612u.gofish;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -39,10 +35,12 @@ public class LoginActivity extends AppCompatActivity {
                     password = ((EditText)findViewById(R.id.editPassword)).getText().toString();
                     HttpHelper httpHelper = new HttpHelper(callback);
                     JSONObject jsonObject = new JSONObject();
+
                     try {
                         jsonObject.accumulate("email", email)
                                 .accumulate("password", password);
                         httpHelper.GET(HttpHelper.TABLE.USER, jsonObject);
+
                     } catch (JSONException e) {
                         Log.wtf("Error:", "JSON Exception thrown");
                     }
@@ -82,6 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
                 if (isLoginSuccessful(response)) {
+                    Intent intent = new Intent(getBaseContext(), Admin_Activity.class);
+                    intent.putExtra("email", email);
                     startActivity(new Intent(LoginActivity.this, Admin_Activity.class));
                 }
                 return true;
