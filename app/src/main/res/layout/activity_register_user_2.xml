@@ -167,7 +167,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/registerUserRole"
-        android:entries="@array/spinner_entries"
+        android:entries="@array/user_roles"
         android:spinnerMode="dropdown"
         android:layout_below="@+id/registerUserPhone"
         android:layout_alignParentLeft="true"

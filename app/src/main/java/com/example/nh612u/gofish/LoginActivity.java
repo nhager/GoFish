@@ -6,10 +6,12 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.os.Handler.Callback;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +33,8 @@ public class LoginActivity extends AppCompatActivity {
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    email = ((EditText)findViewById(R.id.loginEmail)).getText().toString();
-                    password = ((EditText)findViewById(R.id.loginPassword)).getText().toString();
+                    email = ((EditText) findViewById(R.id.loginEmail)).getText().toString();
+                    password = ((EditText) findViewById(R.id.loginPassword)).getText().toString();
                     HttpHelper httpHelper = new HttpHelper(callback);
                     JSONObject jsonObject = new JSONObject();
 
@@ -46,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             });
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             Log.wtf("Error:", "Null Pointer Exception thrown");
         }
 
@@ -57,6 +59,26 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegisterUserActivity.class));
             }
         });
+    }
+
+    private Callback getLoginCallback() {
+        final Callback callback = new Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                if (isLoginSuccessful(response)) {
+                    Intent intent = new Intent(getBaseContext(), Admin_Activity.class);
+                    intent.putExtra("email", email);
+                    startActivity(new Intent(LoginActivity.this, Admin_Activity.class));
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Email/password combination invalid.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                return true;
+            }
+        };
+        return callback;
     }
 
     private boolean isLoginSuccessful(String response) {
@@ -72,21 +94,5 @@ public class LoginActivity extends AppCompatActivity {
         } finally {
             return retval;
         }
-    }
-
-    private Callback getLoginCallback() {
-        final Callback callback = new Callback() {
-            public boolean handleMessage(Message msg) {
-                Bundle bundle = msg.getData();
-                final String response = bundle.getString("response");
-                if (isLoginSuccessful(response)) {
-                    Intent intent = new Intent(getBaseContext(), Admin_Activity.class);
-                    intent.putExtra("email", email);
-                    startActivity(new Intent(LoginActivity.this, Admin_Activity.class));
-                }
-                return true;
-            }
-        };
-        return callback;
     }
 }

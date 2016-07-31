@@ -12,7 +12,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/usercreate"
+        android:text="@string/create_user"
         android:id="@+id/createUser"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -21,7 +21,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/deleteuser"
+        android:text="@string/delete_user"
         android:id="@+id/deleteUser"
         android:layout_above="@+id/createUser"
         android:layout_alignLeft="@+id/createUser"

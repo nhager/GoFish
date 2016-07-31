@@ -7,10 +7,12 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,11 +40,18 @@ public class RegisterUserActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText tempEmail = (EditText) findViewById(R.id.registerUserEmail);
-                EditText tempPassword = (EditText) findViewById(R.id.registerUserPassword);
-                email = tempEmail != null ? tempEmail.getText().toString() : null;
-                password = tempPassword != null ? tempPassword.getText().toString() : null;
-                if (email == null || email.equals("") || password == null || password.equals("")) return;
+                EditText emailEditText = (EditText) findViewById(R.id.registerUserEmail);
+                EditText passwordEditText = (EditText) findViewById(R.id.registerUserPassword);
+                email = emailEditText != null ? emailEditText.getText().toString() : null;
+                password = passwordEditText != null ? passwordEditText.getText().toString() : null;
+                if (email == null || email.equals("")) {
+                    emailEditText.setError("Must provide email.");
+                    return;
+                }
+                if (password == null || password.equals("")) {
+                    passwordEditText.setError("Must provide password.");
+                    return;
+                }
                 HttpHelper httpHelper = new HttpHelper(getNextRegisterViewCallback());
                 JSONObject jsonObject = new JSONObject();
                 try {
@@ -56,17 +65,26 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     private Handler.Callback getNextRegisterViewCallback() {
-        final Handler.Callback callback = new Handler.Callback() {
+        return new Handler.Callback() {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                if (response != null && response.contains("not found")) {
-                    setNextView();
+                if (response != null) {
+                    if (response.contains("not found")) {
+                        setNextView();
+                    } else {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "Email already exists. Pick another.", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Server error.", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
                 return true;
             }
         };
-        return callback;
     }
 
     private void setNextView() {
