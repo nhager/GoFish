@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.InterfaceAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
@@ -53,7 +54,9 @@ public class HttpHelper {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
+
                     if (statusCode == 200) {
+
                         final String response = new String(responseBody, "UTF-8");
                         Message message = new Message();
                         Bundle bundle = new Bundle();
@@ -79,6 +82,35 @@ public class HttpHelper {
         StringEntity entity = new StringEntity(jsonObject.toString());
         entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         client.post(context, urlString, entity, "application/json", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    if (statusCode == 200) {
+                        final String response = new String(responseBody, "UTF-8");
+                        Message message = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("response", response);
+                        message.setData(bundle);
+                        callback.handleMessage(message);
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+    
+    public void DELETE(final Context context, final TABLE tableEnum, final JSONObject jsonObject)
+            throws UnsupportedEncodingException {
+        final String urlString = buildURLString_POST(tableEnum);
+        StringEntity entity = new StringEntity(jsonObject.toString());
+        entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        client.delete(context, urlString, entity, "application/json", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {

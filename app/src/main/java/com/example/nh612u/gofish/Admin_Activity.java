@@ -14,6 +14,10 @@ public class Admin_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_view);
         final Button button = (Button) findViewById(R.id.createUser);
+        Bundle email = getIntent().getExtras();
+        if (email != null) {
+            String emailAddr = email.getString("email");
+        }
         try {
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {

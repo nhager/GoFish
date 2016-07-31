@@ -35,10 +35,12 @@ public class LoginActivity extends AppCompatActivity {
                     password = ((EditText)findViewById(R.id.loginPassword)).getText().toString();
                     HttpHelper httpHelper = new HttpHelper(callback);
                     JSONObject jsonObject = new JSONObject();
+
                     try {
                         jsonObject.accumulate("email", email)
                                 .accumulate("password", password);
                         httpHelper.GET(HttpHelper.TABLE.USER, jsonObject);
+
                     } catch (JSONException e) {
                         Log.wtf("Error:", "JSON Exception thrown");
                     }
@@ -78,6 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
                 if (isLoginSuccessful(response)) {
+                    Intent intent = new Intent(getBaseContext(), Admin_Activity.class);
+                    intent.putExtra("email", email);
                     startActivity(new Intent(LoginActivity.this, Admin_Activity.class));
                 }
                 return true;
