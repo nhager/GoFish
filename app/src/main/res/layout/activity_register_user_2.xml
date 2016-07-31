@@ -7,14 +7,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".UserActivity">
+    tools:context=".RegisterUserActivity">
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editName"
+        android:id="@+id/registerUserFirst"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress|textPersonName"
         android:ems="10"
-        android:id="@+id/editLast"
-        android:layout_below="@+id/editName"
+        android:id="@+id/registerUserLast"
+        android:layout_below="@+id/registerUserFirst"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:ems="10"
-        android:id="@+id/editAddress"
-        android:layout_below="@+id/editLast"
+        android:id="@+id/registerUserAddress"
+        android:layout_below="@+id/registerUserLast"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -44,31 +44,31 @@
         android:layout_height="wrap_content"
         android:inputType="textPostalAddress"
         android:ems="10"
-        android:id="@+id/editCity"
-        android:layout_below="@+id/editAddress"
+        android:id="@+id/registerUserCity"
+        android:layout_below="@+id/registerUserAddress"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editState"
-        android:layout_below="@+id/editCity"
+        android:id="@+id/registerUserState"
+        android:layout_below="@+id/registerUserCity"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editCity"
-        android:layout_alignEnd="@+id/editCity"
+        android:layout_alignRight="@+id/registerUserCity"
+        android:layout_alignEnd="@+id/registerUserCity"
         android:inputType="text" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editZip"
-        android:layout_below="@+id/editState"
+        android:id="@+id/registerUserZip"
+        android:layout_below="@+id/registerUserState"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editCity"
-        android:layout_alignEnd="@+id/editCity"
+        android:layout_alignRight="@+id/registerUserCity"
+        android:layout_alignEnd="@+id/registerUserCity"
         android:inputType="phone" />
 
     <TextView
@@ -76,8 +76,8 @@
         android:layout_height="wrap_content"
         android:text="@string/name"
         android:id="@+id/textView"
-        android:layout_alignBottom="@+id/editName"
-        android:layout_toRightOf="@+id/editName"
+        android:layout_alignBottom="@+id/registerUserFirst"
+        android:layout_toRightOf="@+id/registerUserFirst"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -91,18 +91,18 @@
         android:layout_alignParentEnd="true"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
-        android:layout_alignTop="@+id/editLast"
-        android:layout_alignBottom="@+id/editLast" />
+        android:layout_alignTop="@+id/registerUserLast"
+        android:layout_alignBottom="@+id/registerUserLast" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/address"
         android:id="@+id/textView3"
-        android:layout_alignTop="@+id/editAddress"
+        android:layout_alignTop="@+id/registerUserAddress"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/editCity"
+        android:layout_above="@+id/registerUserCity"
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignStart="@+id/textView2" />
 
@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:text="@string/city"
         android:id="@+id/textView4"
-        android:layout_above="@+id/editState"
+        android:layout_above="@+id/registerUserState"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/textView3"
@@ -123,9 +123,9 @@
         android:layout_height="wrap_content"
         android:text="@string/state"
         android:id="@+id/textView5"
-        android:layout_alignBottom="@+id/editState"
-        android:layout_toRightOf="@+id/editCity"
-        android:layout_alignTop="@+id/editState"
+        android:layout_alignBottom="@+id/registerUserState"
+        android:layout_toRightOf="@+id/registerUserCity"
+        android:layout_alignTop="@+id/registerUserState"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -134,8 +134,8 @@
         android:layout_height="wrap_content"
         android:text="@string/zip"
         android:id="@+id/textView6"
-        android:layout_alignBottom="@+id/editZip"
-        android:layout_toRightOf="@+id/editState"
+        android:layout_alignBottom="@+id/registerUserZip"
+        android:layout_toRightOf="@+id/registerUserState"
         android:layout_below="@+id/textView5"
         android:layout_alignRight="@+id/textView5"
         android:layout_alignEnd="@+id/textView5" />
@@ -143,8 +143,8 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editPhone"
-        android:layout_below="@+id/editZip"
+        android:id="@+id/registerUserPhone"
+        android:layout_below="@+id/registerUserZip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/textView6"
@@ -156,63 +156,28 @@
         android:layout_height="wrap_content"
         android:text="@string/phone"
         android:id="@+id/textView7"
-        android:layout_alignBottom="@+id/editPhone"
+        android:layout_alignBottom="@+id/registerUserPhone"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/textView6"
         android:layout_alignLeft="@+id/textView6"
         android:layout_alignStart="@+id/textView6" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editEmail"
-        android:layout_below="@+id/editPhone"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editPhone"
-        android:layout_alignEnd="@+id/editPhone"
-        android:inputType="textEmailAddress" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/email"
-        android:id="@+id/textView8"
-        android:layout_alignBottom="@+id/editEmail"
-        android:layout_toRightOf="@+id/editPhone"
-        android:layout_below="@+id/textView7"
-        android:layout_alignRight="@+id/textView7"
-        android:layout_alignEnd="@+id/textView7" />
-
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
+        android:id="@+id/registerUserRole"
         android:entries="@array/spinner_entries"
         android:spinnerMode="dropdown"
-        android:layout_below="@+id/editPassword"
+        android:layout_below="@+id/registerUserPhone"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/enter"
-        android:id="@+id/enterButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/editEmail"
-        android:layout_alignEnd="@+id/editEmail" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editPassword"
-        android:layout_below="@+id/editEmail"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editEmail"
-        android:layout_alignEnd="@+id/editEmail"
-        android:inputType="textPassword" />
+        android:text="Register"
+        android:id="@+id/registerUserButton"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

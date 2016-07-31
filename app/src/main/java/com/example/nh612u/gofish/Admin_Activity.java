@@ -21,7 +21,7 @@ public class Admin_Activity extends AppCompatActivity {
         try {
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    startActivity(new Intent(Admin_Activity.this, UserActivity.class));
+                    startActivity(new Intent(Admin_Activity.this, RegisterUserActivity.class));
                 }
 
             });
