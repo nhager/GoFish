@@ -11,10 +11,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -31,7 +34,6 @@ public class LocationTest extends AppCompatActivity implements OnMapReadyCallbac
     private Location mCurrentLocation;
     private LocationRequest mLocationRequest;
     private boolean mRequestingLocationUpdates;
-    protected String mLastUpdateTime;
     private Marker mMarker;
 
     private GoogleMap mMap;
@@ -49,7 +51,6 @@ public class LocationTest extends AppCompatActivity implements OnMapReadyCallbac
         mLong = (TextView) findViewById(R.id.longitude);
 
         mRequestingLocationUpdates = false;
-        mLastUpdateTime = "";
 
         if (mGoogleApiClient == null) {
             mRequestingLocationUpdates = true;
@@ -143,10 +144,16 @@ public class LocationTest extends AppCompatActivity implements OnMapReadyCallbac
     protected void updateUi() {
         mLong.setText(Double.toString(mCurrentLocation.getLongitude()));
         mLat.setText(Double.toString(mCurrentLocation.getLatitude()));
-        if (mMarker == null)
+        if (mMarker == null) {
             mMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude())).title("Marker"));
-        else
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            builder.include(mMarker.getPosition());
+            CameraUpdate updateCenter = CameraUpdateFactory.newLatLngZoom(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 10.0f);;
+            mMap.animateCamera(updateCenter);
+        }
+        else {
             mMarker.setPosition(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
+        }
     }
 
     @Override
