@@ -1,12 +1,8 @@
 package com.example.nh612u.gofish;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -35,8 +31,8 @@ public class LoginActivity extends AppCompatActivity {
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    email = ((EditText)findViewById(R.id.editEmail)).getText().toString();
-                    password = ((EditText)findViewById(R.id.editPassword)).getText().toString();
+                    email = ((EditText)findViewById(R.id.loginEmail)).getText().toString();
+                    password = ((EditText)findViewById(R.id.loginPassword)).getText().toString();
                     HttpHelper httpHelper = new HttpHelper(callback);
                     JSONObject jsonObject = new JSONObject();
                     try {
@@ -56,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, UserActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterUserActivity.class));
             }
         });
     }
@@ -65,8 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         boolean retval = false;
         try {
             JSONObject jsonObj = new JSONObject(response);
-            String jsonEmail = jsonObj.getString("email");
-            String jsonPass = jsonObj.getString("password");
+            String jsonEmail = jsonObj.has("email") ? jsonObj.getString("email")  : null;
+            String jsonPass = jsonObj.has("password") ? jsonObj.getString("password") : null;
             retval = jsonEmail != null && !jsonEmail.equals("") && jsonPass != null && !jsonPass.equals("")
                     && jsonEmail.equals(email) && jsonPass.equals(password);
         } catch (JSONException e) {

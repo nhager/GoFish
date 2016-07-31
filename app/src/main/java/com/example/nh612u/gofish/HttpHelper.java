@@ -82,7 +82,7 @@ public class HttpHelper {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
-                    if (statusCode == 201) {
+                    if (statusCode == 200) {
                         final String response = new String(responseBody, "UTF-8");
                         Message message = new Message();
                         Bundle bundle = new Bundle();
