@@ -21,4 +21,5 @@
         <item>Volunteer</item>
     </string-array>
     <string name="title_activity_login">Login</string>
+    <string name="action_settings">Settings</string>
 </resources>

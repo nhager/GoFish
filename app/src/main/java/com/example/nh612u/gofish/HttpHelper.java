@@ -31,12 +31,9 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 
-/**
- * Created by fmonteiro on 7/28/2016.
- */
 public class HttpHelper {
     public enum TABLE {
-        USER;
+        USER
     }
 
     private static final String SERVER_URL = "http://go-fish-api.herokuapp.com/";
@@ -54,9 +51,7 @@ public class HttpHelper {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
-
                     if (statusCode == 200) {
-
                         final String response = new String(responseBody, "UTF-8");
                         Message message = new Message();
                         Bundle bundle = new Bundle();
