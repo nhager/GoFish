@@ -46,8 +46,6 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_main);
-        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        initLocationService();
         setUpMap();
         setUpFloatingActionButton();
     }
@@ -71,6 +69,8 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        initLocationService();
         Location loc = getCoordinates();
         LatLngBounds locBounds = new LatLngBounds(
                 new LatLng(loc.getLatitude() - 5, loc.getLongitude() - 5),
@@ -119,7 +119,10 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     public static Location getCoordinates() {
-        return location;
+        Location loc = new Location("TestProvider");
+        loc.setLatitude(33.7490);
+        loc.setLongitude(-84.3380);
+        return loc;
     }
 
     @Override

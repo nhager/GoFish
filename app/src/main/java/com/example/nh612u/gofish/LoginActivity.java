@@ -93,9 +93,12 @@ public class LoginActivity extends AppCompatActivity {
             JSONObject jsonObj = new JSONObject(response);
             String jsonEmail = jsonObj.has("email") ? jsonObj.getString("email")  : null;
             String jsonPass = jsonObj.has("password") ? jsonObj.getString("password") : null;
+            System.out.println(jsonEmail + " " + jsonPass);
             retval = jsonEmail != null && !jsonEmail.equals("") && jsonPass != null && !jsonPass.equals("")
                     && jsonEmail.equals(email) && jsonPass.equals(password);
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             return retval;

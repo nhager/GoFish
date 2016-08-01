@@ -89,7 +89,6 @@ public class DeleteActivity extends AppCompatActivity {
             final Context cur = this;
             List<String> spinnerArray =  new ArrayList<String>();
             for(int i = 0; i < jsonObj.length(); i++){
-
                 spinnerArray.add(jsonObj.getJSONObject(i).getString("id" +
                         jsonObj.getJSONObject(i).getString(DBHelper.FeedEntry.COLUMN_NAME_FIRST))
                         + jsonObj.getJSONObject(i).getString(DBHelper.FeedEntry.COLUMN_NAME_LAST));

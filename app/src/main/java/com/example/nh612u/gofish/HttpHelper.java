@@ -58,6 +58,13 @@ public class HttpHelper {
                         bundle.putString("response", response);
                         message.setData(bundle);
                         callback.handleMessage(message);
+                    } else {
+                        final String response = "Error contacting server.";
+                        Message message = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("response", response);
+                        message.setData(bundle);
+                        callback.handleMessage(message);
                     }
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
