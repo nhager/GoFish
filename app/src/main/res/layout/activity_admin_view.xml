@@ -14,16 +14,17 @@
         android:layout_height="wrap_content"
         android:text="@string/create_user"
         android:id="@+id/createUser"
+        android:layout_marginBottom="160dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="58dp" />
+        android:layout_alignLeft="@+id/deleteUser"
+        android:layout_alignStart="@+id/deleteUser" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/delete_user"
         android:id="@+id/deleteUser"
-        android:layout_above="@+id/createUser"
-        android:layout_alignLeft="@+id/createUser"
-        android:layout_alignStart="@+id/createUser" />
+        android:layout_alignTop="@+id/createUser"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp" />
 </RelativeLayout>
