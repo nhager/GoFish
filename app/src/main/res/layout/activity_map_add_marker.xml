@@ -55,7 +55,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/fishDescription"
         android:layout_below="@+id/fishType"
@@ -79,6 +79,5 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="63dp" />
-
 
 </RelativeLayout>

@@ -17,6 +17,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 public class MapAddMarkerActivity extends AppCompatActivity {
     private Button addMarkerButton;
 
@@ -24,8 +26,8 @@ public class MapAddMarkerActivity extends AppCompatActivity {
     private String fishTypeStr;
     private String fishDescriptionStr;
 
-    private int user_id = 0;
-    private int event_id = 0;
+    private int event_id = 1;
+    private int user_id = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,17 +64,20 @@ public class MapAddMarkerActivity extends AppCompatActivity {
         markerOptions.title(fishNameStr);
         markerOptions.snippet(fishTypeStr + "," + fishDescriptionStr);
         markerOptions.draggable(true);
-        // MapMainActivity.addMarker(markerOptions);
+        MapMainActivity.addMarker(markerOptions);
         HttpHelper httpHelper = new HttpHelper(getCreateMapMarkerCallback());
         try {
             JSONObject jsonObject = new JSONObject();
-            //jsonObject.accumulate("event_id", );
-            //jsonObject.accumulate("user_id", );
+            jsonObject.accumulate("event_id", event_id);
+            jsonObject.accumulate("user_id", user_id);
             jsonObject.accumulate("title", fishNameStr);
             jsonObject.accumulate("fish_type", fishTypeStr);
             jsonObject.accumulate("fish_description", fishDescriptionStr);
             jsonObject.accumulate("coordinates", markerOptions.getPosition().toString());
+            httpHelper.POST(getApplicationContext(), HttpHelper.TABLE.MAP_MARKER, jsonObject);
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
@@ -82,7 +87,7 @@ public class MapAddMarkerActivity extends AppCompatActivity {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                if (response.contains("error")) {
+                if (response == null || response.contains("error")) {
                     Toast toast = Toast.makeText(getApplicationContext(),
                             response, Toast.LENGTH_SHORT);
                     toast.show();

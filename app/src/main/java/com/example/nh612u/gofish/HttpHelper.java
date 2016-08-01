@@ -60,6 +60,7 @@ public class HttpHelper {
                     bundle.putString("response", response);
                     message.setData(bundle);
                     callback.handleMessage(message);
+
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -67,7 +68,16 @@ public class HttpHelper {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                try {
+                    final String response = new String(responseBody, "UTF-8");
+                    Message message = new Message();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("response", response);
+                    message.setData(bundle);
+                    callback.handleMessage(message);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -138,15 +148,14 @@ public class HttpHelper {
         try {
             Iterator<?> keys = jsonObject.keys();
             while (keys.hasNext()) {
-                final String key = ((String) keys.next()).trim();
-                final String val = ((String) jsonObject.get(key)).trim();
+                final String key = keys.next().toString().trim();
+                final String val = jsonObject.get(key).toString().trim();
                 urlString += key + "=" + val + "&";
             }
         } catch (JSONException e) {
             Log.wtf("Error:", "JSON Exception thrown");
-        } finally {
-            return urlString.substring(0, urlString.length() - 1);
         }
+        return urlString.substring(0, urlString.length() - 1);
     }
 
     private String buildURLString_POST(final TABLE tableEnum) {

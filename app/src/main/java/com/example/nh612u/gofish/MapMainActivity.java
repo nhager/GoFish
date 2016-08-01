@@ -9,6 +9,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +29,10 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,8 +129,14 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     private void initMarkers() {
-        for (MarkerOptions marker : markerList) {
-            mMap.addMarker(marker);
+        HttpHelper httpHelper = new HttpHelper(getGetMapMarkerCallback());
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("event_id", 1);
+            jsonObject.accumulate("user_id", 1);
+            httpHelper.GET(HttpHelper.TABLE.MAP_MARKER, jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -165,11 +178,7 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     public static Location getCoordinates() {
-        System.out.println(location);
-        Location loc = new Location("TestProvider");
-        loc.setLatitude(33.7490);
-        loc.setLongitude(-84.3380);
-        return loc;
+        return location;
     }
 
     @Override
@@ -190,5 +199,21 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         Log.d("Latitude", "status");
+    }
+
+    private Handler.Callback getGetMapMarkerCallback() {
+        final Handler.Callback callback = new Handler.Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                if (response == null || response.contains("error") || response.contains("message")) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            response, Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                return true;
+            }
+        };
+        return callback;
     }
 }
