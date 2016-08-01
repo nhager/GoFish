@@ -93,6 +93,7 @@ public class AddEC extends AppCompatActivity {
             Bundle bundle = getIntent().getExtras();
             if (bundle != null) {
                 JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("user_id", Integer.valueOf(bundle.getString("id")));
                 jsonObject.accumulate("firstname", information[0]);
                 jsonObject.accumulate("lastname", information[1]);
                 jsonObject.accumulate("address", information[2]);
@@ -101,10 +102,9 @@ public class AddEC extends AppCompatActivity {
                 jsonObject.accumulate("zip", information[5]);
                 jsonObject.accumulate("phone", information[6]);
                 jsonObject.accumulate("email", information[7]);
-                jsonObject.accumulate("user_id", Integer.valueOf(bundle.getString("id")));
                 Log.wtf("Information", jsonObject.toString());
-                HttpHelper httpHelper = new HttpHelper(getCreateECCallback());
-                httpHelper.POST(getApplicationContext(), HttpHelper.TABLE.EMERGENCY_CONTACT, jsonObject);
+                HttpHelper helper = new HttpHelper(getCreateECCallback());
+                helper.POST(getApplicationContext(), HttpHelper.TABLE.EMERGENCY_CONTACT, jsonObject);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -118,6 +118,7 @@ public class AddEC extends AppCompatActivity {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
                 Bundle b = getIntent().getExtras();
+                if (b != null) {
                     Intent intent = new Intent(getBaseContext(), Veteran_Activity.class);
                     intent.putExtra("email", bundle.getString("email"));
                     intent.putExtra("id", bundle.getString("id"));

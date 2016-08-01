@@ -86,7 +86,7 @@ public class DeleteActivity extends AppCompatActivity {
             final Context cur = this;
             if(json instanceof JSONObject){
                 JSONObject jsonObj = new JSONObject(response);
-                if(jsonObj.getString("message") != null &&
+                if(jsonObj.has("message") &&
                         jsonObj.get("message").equals("User with provided parameters not found.")) {
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "User not found.", Toast.LENGTH_SHORT);

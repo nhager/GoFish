@@ -33,7 +33,7 @@ public class DeleteEC extends AppCompatActivity {
         try {
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Spinner sItems = (Spinner) findViewById(R.id.deleteSpinner);
+                    Spinner sItems = (Spinner) findViewById(R.id.ecSpinner);
                     String selected = sItems.getSelectedItem().toString();
                     Scanner scanner = new Scanner(selected);
                     String id = scanner.next();
@@ -60,8 +60,9 @@ public class DeleteEC extends AppCompatActivity {
         try {
             Bundle email = getIntent().getExtras();
             if (email != null) {
-                String  id = email.getString("id");
-                jsonObject.accumulate("user_id", id);
+                String id = email.getString("id");
+                Integer temp = Integer.valueOf(id);
+                jsonObject.accumulate("user_id", temp);
                 httpHelper.GET(HttpHelper.TABLE.EMERGENCY_CONTACT, jsonObject);
             }
 
@@ -78,7 +79,7 @@ public class DeleteEC extends AppCompatActivity {
             final Context cur = this;
             if (json instanceof JSONObject) {
                 JSONObject jsonObj = new JSONObject(response);
-                if (jsonObj.getString("message") != null &&
+                if (jsonObj.has("message") &&
                         jsonObj.get("message").equals("EC with provided parameters not found.")) {
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "User not found.", Toast.LENGTH_SHORT);
@@ -92,7 +93,6 @@ public class DeleteEC extends AppCompatActivity {
             } else if (json instanceof JSONArray) {
                 JSONArray jsonObj = new JSONArray(response);
                 for (int i = 0; i < jsonObj.length(); i++) {
-
                     spinnerArray.add(jsonObj.getJSONObject(i).getString(DBHelper.FeedEntry.COLUMN_NAME_EMAIL) + " "
                             + " " + jsonObj.getJSONObject(i).getString(DBHelper.FeedEntry.COLUMN_NAME_FIRST)
                             + " " + jsonObj.getJSONObject(i).getString(DBHelper.FeedEntry.COLUMN_NAME_LAST));
@@ -101,7 +101,7 @@ public class DeleteEC extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                     cur, android.R.layout.simple_spinner_item, spinnerArray);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            Spinner sItems = (Spinner) findViewById(R.id.deleteSpinner);
+            Spinner sItems = (Spinner) findViewById(R.id.ecSpinner);
             sItems.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
