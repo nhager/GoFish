@@ -39,5 +39,44 @@ public class Admin_Activity extends AppCompatActivity {
         } catch(NullPointerException e) {
             Log.wtf("Error:", "Null Pointer Exception thrown");
         }
+
+        // Jon event stuff
+        final Button eventAddButton = (Button) findViewById(R.id.createEvent);
+        try {
+            eventAddButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(Admin_Activity.this, CreateEventActivity.class));
+                }
+
+            });
+        } catch(NullPointerException e) {
+            Log.wtf("Error:", "Null Pointer Exception thrown");
+        }
+
+        final Button eventDeleteButton = (Button) findViewById(R.id.deleteEvent);
+        try {
+            eventDeleteButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(Admin_Activity.this, DeleteEventActivity.class));
+                }
+
+            });
+        } catch(NullPointerException e) {
+            Log.wtf("Error:", "Null Pointer Exception thrown");
+        }
+
+        final Button eventViewButton = (Button) findViewById(R.id.viewEvent);
+        try {
+            eventViewButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(Admin_Activity.this, DeleteEventActivity.class));
+                }
+
+            });
+        } catch(NullPointerException e) {
+            Log.wtf("Error:", "Null Pointer Exception thrown");
+        }
+
+        
     }
 }

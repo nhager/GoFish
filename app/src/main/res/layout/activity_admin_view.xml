@@ -14,16 +14,43 @@
         android:layout_height="wrap_content"
         android:text="@string/create_user"
         android:id="@+id/createUser"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="58dp" />
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/deleteUser"
+        android:layout_alignEnd="@+id/deleteUser" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/delete_user"
         android:id="@+id/deleteUser"
-        android:layout_above="@+id/createUser"
-        android:layout_alignLeft="@+id/createUser"
-        android:layout_alignStart="@+id/createUser" />
+        android:layout_alignTop="@+id/createUser"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CREATE EVENT"
+        android:id="@+id/createEvent"
+        android:layout_below="@+id/deleteUser"
+        android:layout_alignLeft="@+id/deleteUser"
+        android:layout_alignStart="@+id/deleteUser" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DELETE EVENT"
+        android:id="@+id/deleteEvent"
+        android:layout_below="@+id/createEvent"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIEW EVENT"
+        android:id="@+id/viewEvent"
+        android:layout_below="@+id/deleteEvent"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -33,7 +33,9 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class HttpHelper {
     public enum TABLE {
-        USER
+        USER,
+        EVENT,
+        EMERGENCY_CONTACT;
     }
 
     private static final String SERVER_URL = "http://go-fish-api.herokuapp.com/";
@@ -47,6 +49,7 @@ public class HttpHelper {
 
     public void GET(final TABLE tableEnum, final JSONObject jsonObject) {
         final String urlString = buildURLString_GET(tableEnum, jsonObject);
+        Log.wtf("plz send help", urlString);
         client.get(urlString, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -70,7 +73,6 @@ public class HttpHelper {
             }
         });
     }
-
     public void POST(final Context context, final TABLE tableEnum, final JSONObject jsonObject)
             throws UnsupportedEncodingException {
         final String urlString = buildURLString_POST(tableEnum);
@@ -92,7 +94,6 @@ public class HttpHelper {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
@@ -131,13 +132,21 @@ public class HttpHelper {
 
     private String buildURLString_GET(final  TABLE tableEnum, final JSONObject jsonObject) {
         final String table = enumToString(tableEnum);
-        String urlString = SERVER_URL + table;
+        String urlString = SERVER_URL + table + "?";
+        Log.wtf("table", urlString);
         try {
             Iterator<?> keys = jsonObject.keys();
-            while (keys.hasNext()) {
-                final String key = ((String) keys.next()).trim();
-                final String val = ((String) jsonObject.get(key)).trim();
-                urlString += key + "=" + val + "&";
+            Log.wtf("table", Integer.toString(jsonObject.length()));
+            if(jsonObject.length() == 1 && jsonObject.has("user_id")){
+                urlString += "user_id" + "=" + jsonObject.getString("user_id") + "&";
+                Log.wtf("table", urlString);
+            } else {
+                while (keys.hasNext()) {
+                    final String key = ((String) keys.next()).trim();
+                    final String val = ((String) jsonObject.get(key)).trim();
+                    urlString += key + "=" + val + "&";
+                    Log.wtf("table", urlString);
+                }
             }
         } catch (JSONException e) {
             Log.wtf("Error:", "JSON Exception thrown");
@@ -153,7 +162,11 @@ public class HttpHelper {
     private String enumToString(TABLE table) {
         switch (table) {
             case USER:
-                return "user?";
+                return "user";
+            case EVENT:
+                return "event";
+            case EMERGENCY_CONTACT:
+                return "emergency_contact";
             default:
                 return null;
         }
