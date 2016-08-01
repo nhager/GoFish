@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -23,33 +22,34 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapMainActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
-
-    protected static GoogleMap mMap;
-
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     private static final int MY_PERMISSION_ACCESS_COURSE_LOCATION = 123;
 
-    private LocationManager locationManager;
+    protected static GoogleMap mMap;
     private static Location location;
+
+    private LocationManager locationManager;
     private boolean isGPSEnabled = false;
     private boolean isNetworkEnabled = false;
-
-    public static FragmentManager fragmentManager;
+    private static List<MarkerOptions> markerList = new ArrayList<MarkerOptions>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_main);
-        // setUpMap();
-        setUpFloatingActionButton();
-        fragmentManager = getSupportFragmentManager();
-
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         initLocationService();
+        setUpMap();
+        setUpFloatingActionButton();
     }
 
     private void setUpMap() {
@@ -71,9 +71,19 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        Location loc = getCoordinates();
+        LatLngBounds locBounds = new LatLngBounds(
+                new LatLng(loc.getLatitude() - 5, loc.getLongitude() - 5),
+                new LatLng(loc.getLatitude() + 5, loc.getLongitude() + 5));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locBounds.getCenter(), 15));
+        for (MarkerOptions marker : markerList) {
+            mMap.addMarker(marker);
+        }
+    }
 
-        System.out.println("_________________ON MAP READY_____________________");
-
+    public static void addMarker(MarkerOptions markerOptions) {
+        mMap.addMarker(markerOptions);
+        markerList.add(markerOptions);
     }
 
     @TargetApi(23)
@@ -89,26 +99,21 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
 
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        if (!isGPSEnabled && !isGPSEnabled) return;
 
         if (isGPSEnabled) {
-            System.out.println("____________GPS ENABLED__________________");
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     MIN_TIME_BW_UPDATES,
                     MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
             if (locationManager != null)  {
                 location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                updateCoordinates();
             }
         } else if (isNetworkEnabled) {
-            System.out.println("____________NETWORK ENABLED__________________");
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                     MIN_TIME_BW_UPDATES,
                     MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
             if (locationManager != null)   {
                 location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                updateCoordinates();
             }
         }
     }
@@ -117,27 +122,23 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
         return location;
     }
 
-    private void updateCoordinates() {
-
-    }
-
     @Override
     public void onLocationChanged(Location location) {
-
+        initLocationService();
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d("Latitude","disable");
+        Log.d("Latitude", "disable");
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.d("Latitude","enable");
+        Log.d("Latitude", "enable");
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d("Latitude","status");
+        Log.d("Latitude", "status");
     }
 }
