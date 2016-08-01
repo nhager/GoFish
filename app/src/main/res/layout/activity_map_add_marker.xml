@@ -14,31 +14,9 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:ems="10"
-        android:id="@+id/markerName"
+        android:id="@+id/fishName"
         android:layout_marginTop="39dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Marker Name"
-        android:id="@+id/markerNameText"
-        android:layout_alignBottom="@+id/markerName"
-        android:layout_toRightOf="@+id/markerName"
-        android:layout_alignTop="@+id/markerName"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:id="@+id/fishName"
-        android:layout_marginTop="51dp"
-        android:layout_below="@+id/markerName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -50,8 +28,29 @@
         android:layout_alignBottom="@+id/fishName"
         android:layout_toRightOf="@+id/fishName"
         android:layout_alignTop="@+id/fishName"
-        android:layout_alignRight="@+id/markerNameText"
-        android:layout_alignEnd="@+id/markerNameText" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/fishType"
+        android:layout_below="@+id/fishName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fish Type"
+        android:id="@+id/fishTypeText"
+        android:layout_alignBottom="@+id/fishType"
+        android:layout_toRightOf="@+id/fishType"
+        android:layout_alignTop="@+id/fishType"
+        android:layout_alignRight="@+id/fishNameText"
+        android:layout_alignEnd="@+id/fishNameText" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -59,8 +58,7 @@
         android:inputType="text"
         android:ems="10"
         android:id="@+id/fishDescription"
-        android:layout_marginTop="51dp"
-        android:layout_below="@+id/fishName"
+        android:layout_below="@+id/fishType"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -69,11 +67,9 @@
         android:layout_height="wrap_content"
         android:text="Fish Description"
         android:id="@+id/fishDescriptionText"
-        android:layout_alignBottom="@+id/fishDescription"
-        android:layout_toRightOf="@+id/fishDescription"
-        android:layout_alignTop="@+id/fishDescription"
-        android:layout_alignRight="@+id/fishNameText"
-        android:layout_alignEnd="@+id/fishNameText" />
+        android:layout_below="@+id/fishTypeText"
+        android:layout_toRightOf="@+id/fishType"
+        android:layout_toEndOf="@+id/fishType" />
 
     <Button
         android:layout_width="wrap_content"

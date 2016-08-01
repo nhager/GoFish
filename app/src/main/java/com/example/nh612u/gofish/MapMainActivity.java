@@ -1,7 +1,6 @@
 package com.example.nh612u.gofish;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -68,14 +68,60 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        initMap(googleMap);
+        initLocationManager();
+        initLocationBounds();
+        initMarkers();
+    }
+
+    private void initMap(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                View markerView = getLayoutInflater().inflate(R.layout.custom_marker_layout, null);
+                TextView tvMarkerName = (TextView) markerView.findViewById(R.id.markerTitle);
+                TextView tvFishType = (TextView) markerView.findViewById(R.id.markerFishType);
+                TextView tvFishDescription = (TextView)
+                        markerView.findViewById(R.id.markerFishDescription);
+                // Set marker title
+                tvMarkerName.setText(marker.getTitle());
+                // Set fish type and description
+                String markerSnippet = marker.getSnippet();
+                String fishType = markerSnippet.substring(0, markerSnippet.indexOf(","));
+                tvFishType.setText("Type: " + fishType);
+                String fishDescription = markerSnippet.substring(markerSnippet.indexOf(",") + 1);
+                tvFishDescription.setText("Desc: " + fishDescription);
+                // Set latitude and longitude
+                LatLng latLng = marker.getPosition();
+                TextView tvLatLng = (TextView) markerView.findViewById(R.id.markerLatLng);
+                String coord = Math.abs(latLng.latitude) + "\u00b0" + (latLng.latitude > 0 ? "N" : "S") + " " +
+                        Math.abs(latLng.longitude) + "\u00b0" + (latLng.longitude > 0 ? "E" : "W");
+                tvLatLng.setText("Coord: " + coord);
+                return markerView;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                return null;
+            }
+        });
+    }
+
+    private void initLocationManager() {
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         initLocationService();
+    }
+
+    private void initLocationBounds() {
         Location loc = getCoordinates();
         LatLngBounds locBounds = new LatLngBounds(
                 new LatLng(loc.getLatitude() - 5, loc.getLongitude() - 5),
                 new LatLng(loc.getLatitude() + 5, loc.getLongitude() + 5));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locBounds.getCenter(), 15));
+    }
+
+    private void initMarkers() {
         for (MarkerOptions marker : markerList) {
             mMap.addMarker(marker);
         }
@@ -119,6 +165,7 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     public static Location getCoordinates() {
+        System.out.println(location);
         Location loc = new Location("TestProvider");
         loc.setLatitude(33.7490);
         loc.setLongitude(-84.3380);

@@ -33,7 +33,7 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class HttpHelper {
     public enum TABLE {
-        USER
+        USER, MAP_MARKER
     }
 
     private static final String SERVER_URL = "http://go-fish-api.herokuapp.com/";
@@ -51,21 +51,15 @@ public class HttpHelper {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
+                    String response = "Error contacting server.";
                     if (statusCode == 200) {
-                        final String response = new String(responseBody, "UTF-8");
-                        Message message = new Message();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("response", response);
-                        message.setData(bundle);
-                        callback.handleMessage(message);
-                    } else {
-                        final String response = "Error contacting server.";
-                        Message message = new Message();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("response", response);
-                        message.setData(bundle);
-                        callback.handleMessage(message);
+                        response = new String(responseBody, "UTF-8");
                     }
+                    Message message = new Message();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("response", response);
+                    message.setData(bundle);
+                    callback.handleMessage(message);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -87,14 +81,15 @@ public class HttpHelper {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
+                    String response = "Error contacting server.";
                     if (statusCode == 200) {
-                        final String response = new String(responseBody, "UTF-8");
-                        Message message = new Message();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("response", response);
-                        message.setData(bundle);
-                        callback.handleMessage(message);
+                        response = new String(responseBody, "UTF-8");
                     }
+                    Message message = new Message();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("response", response);
+                    message.setData(bundle);
+                    callback.handleMessage(message);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -116,14 +111,15 @@ public class HttpHelper {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
+                    String response = "Error contacting server.";
                     if (statusCode == 200) {
-                        final String response = new String(responseBody, "UTF-8");
-                        Message message = new Message();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("response", response);
-                        message.setData(bundle);
-                        callback.handleMessage(message);
+                        response = new String(responseBody, "UTF-8");
                     }
+                    Message message = new Message();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("response", response);
+                    message.setData(bundle);
+                    callback.handleMessage(message);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -138,7 +134,7 @@ public class HttpHelper {
 
     private String buildURLString_GET(final  TABLE tableEnum, final JSONObject jsonObject) {
         final String table = enumToString(tableEnum);
-        String urlString = SERVER_URL + table;
+        String urlString = SERVER_URL + table + "?";
         try {
             Iterator<?> keys = jsonObject.keys();
             while (keys.hasNext()) {
@@ -160,7 +156,9 @@ public class HttpHelper {
     private String enumToString(TABLE table) {
         switch (table) {
             case USER:
-                return "user?";
+                return "user";
+            case MAP_MARKER:
+                return "map_marker";
             default:
                 return null;
         }
