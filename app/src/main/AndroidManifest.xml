@@ -42,6 +42,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CreateEventActivity" />
         <activity android:name=".DeleteEventActivity"></activity>
+        <activity android:name=".Veteran_Activity" />
+        <activity android:name=".DeleteEC"></activity>
+        <activity android:name=".AddEC"></activity>
     </application>
 
 </manifest>
