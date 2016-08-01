@@ -79,12 +79,12 @@ public class DeleteEC extends AppCompatActivity {
             if (json instanceof JSONObject) {
                 JSONObject jsonObj = new JSONObject(response);
                 if (jsonObj.getString("message") != null &&
-                        jsonObj.get("message").equals("User with provided parameters not found.")) {
+                        jsonObj.get("message").equals("EC with provided parameters not found.")) {
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "User not found.", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-
+                    Log.wtf("Testing", response);
                     spinnerArray.add(jsonObj.getString(DBHelper.FeedEntry.COLUMN_NAME_EMAIL) + " " +
                             jsonObj.getString(DBHelper.FeedEntry.COLUMN_NAME_FIRST) + " "
                             + jsonObj.getString(DBHelper.FeedEntry.COLUMN_NAME_LAST));

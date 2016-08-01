@@ -81,13 +81,13 @@ public class AddEC extends AppCompatActivity {
     }
     private void addEC(){
         String[] information = new String[8];
-        information[0] = ((EditText) findViewById(R.id.registerUserFirst)).getText().toString();
-        information[1] = ((EditText) findViewById(R.id.registerUserLast)).getText().toString();
-        information[2] = ((EditText) findViewById(R.id.registerUserAddress)).getText().toString();
-        information[3] = ((EditText) findViewById(R.id.registerUserCity)).getText().toString();
-        information[4] = ((EditText) findViewById(R.id.registerUserState)).getText().toString();
-        information[5] = ((EditText) findViewById(R.id.registerUserZip)).getText().toString();
-        information[6] = ((EditText) findViewById(R.id.registerUserPhone)).getText().toString();
+        information[0] = ((EditText) findViewById(R.id.addECFirst)).getText().toString();
+        information[1] = ((EditText) findViewById(R.id.addECLast)).getText().toString();
+        information[2] = ((EditText) findViewById(R.id.addECAddress)).getText().toString();
+        information[3] = ((EditText) findViewById(R.id.addECCity)).getText().toString();
+        information[4] = ((EditText) findViewById(R.id.addECState)).getText().toString();
+        information[5] = ((EditText) findViewById(R.id.addECZip)).getText().toString();
+        information[6] = ((EditText) findViewById(R.id.addECPhone)).getText().toString();
         information[7] = ((EditText) findViewById(R.id.addECEmail)).getText().toString();
         try {
             Bundle bundle = getIntent().getExtras();
@@ -102,6 +102,7 @@ public class AddEC extends AppCompatActivity {
                 jsonObject.accumulate("phone", information[6]);
                 jsonObject.accumulate("email", information[7]);
                 jsonObject.accumulate("user_id", Integer.valueOf(bundle.getString("id")));
+                Log.wtf("Information", jsonObject.toString());
                 HttpHelper httpHelper = new HttpHelper(getCreateECCallback());
                 httpHelper.POST(getApplicationContext(), HttpHelper.TABLE.EMERGENCY_CONTACT, jsonObject);
             }
@@ -116,7 +117,12 @@ public class AddEC extends AppCompatActivity {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                startActivity(new Intent(AddEC.this, Veteran_Activity.class));
+                Bundle b = getIntent().getExtras();
+                    Intent intent = new Intent(getBaseContext(), Veteran_Activity.class);
+                    intent.putExtra("email", bundle.getString("email"));
+                    intent.putExtra("id", bundle.getString("id"));
+                    startActivity(intent);
+                }
                 return true;
             }
         };
