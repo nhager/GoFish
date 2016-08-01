@@ -36,7 +36,8 @@ import cz.msebera.android.httpclient.protocol.HTTP;
  */
 public class HttpHelper {
     public enum TABLE {
-        USER;
+        USER,
+        EMERGENCY_CONTACT;
     }
 
     private static final String SERVER_URL = "http://go-fish-api.herokuapp.com/";
@@ -75,7 +76,6 @@ public class HttpHelper {
             }
         });
     }
-
     public void POST(final Context context, final TABLE tableEnum, final JSONObject jsonObject)
             throws UnsupportedEncodingException {
         final String urlString = buildURLString_POST(tableEnum);
@@ -97,7 +97,6 @@ public class HttpHelper {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
@@ -159,6 +158,8 @@ public class HttpHelper {
         switch (table) {
             case USER:
                 return "user?";
+            case EMERGENCY_CONTACT:
+                return "emergency_contact?";
             default:
                 return null;
         }
