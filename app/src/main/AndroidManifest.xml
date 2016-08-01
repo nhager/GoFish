@@ -24,7 +24,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".DeleteActivity" />
-        <activity android:name=".Admin_Activity"></activity>
+        <activity android:name=".Admin_Activity" />
+        <activity
+            android:name=".InventoryActivity"
+            android:label="@string/title_activity_inventory"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AssignItemActivity"
+            android:label="@string/title_activity_assign_item_activitu"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateItemActivity"
+            android:label="@string/title_activity_create_item"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
