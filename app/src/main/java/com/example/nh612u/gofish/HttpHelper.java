@@ -36,7 +36,8 @@ import cz.msebera.android.httpclient.protocol.HTTP;
  */
 public class HttpHelper {
     public enum TABLE {
-        USER;
+        USER,
+        EVENT;
     }
 
     private static final String SERVER_URL = "http://go-fish-api.herokuapp.com/";
@@ -159,6 +160,8 @@ public class HttpHelper {
         switch (table) {
             case USER:
                 return "user?";
+            case EVENT:
+                return "event?";
             default:
                 return null;
         }
