@@ -41,10 +41,11 @@
             android:label="@string/title_activity_create_item"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CreateEventActivity" />
-        <activity android:name=".DeleteEventActivity"></activity>
+        <activity android:name=".DeleteEventActivity" />
         <activity android:name=".Veteran_Activity" />
-        <activity android:name=".DeleteEC"></activity>
-        <activity android:name=".AddEC"></activity>
+        <activity android:name=".DeleteEC" />
+        <activity android:name=".AddEC" />
+        <activity android:name=".JoinEvent"></activity>
     </application>
 
 </manifest>

@@ -38,7 +38,8 @@ public class HttpHelper {
     public enum TABLE {
         USER,
         EVENT,
-        EMERGENCY_CONTACT;
+        EMERGENCY_CONTACT,
+        EVENT_SIGNUP;
 
     }
 
@@ -173,6 +174,8 @@ public class HttpHelper {
                 return "event?";
             case EMERGENCY_CONTACT:
                 return "emergency_contact?";
+            case EVENT_SIGNUP:
+                return "event_signup?";
             default:
                 return null;
         }

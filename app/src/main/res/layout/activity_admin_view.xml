@@ -14,9 +14,10 @@
         android:layout_height="wrap_content"
         android:text="@string/create_user"
         android:id="@+id/createUser"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/deleteUser"
-        android:layout_alignEnd="@+id/deleteUser" />
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/deleteUser"
+        android:layout_alignStart="@+id/deleteUser"
+        android:layout_marginTop="94dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -53,4 +54,13 @@
         android:id="@+id/viewEvent"
         android:layout_below="@+id/deleteEvent"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JOIN EVENT"
+        android:id="@+id/joinEvent"
+        android:layout_below="@+id/viewEvent"
+        android:layout_alignLeft="@+id/viewEvent"
+        android:layout_alignStart="@+id/viewEvent" />
 </RelativeLayout>
