@@ -57,14 +57,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegisterUserActivity.class));
             }
         });
-
-        /* final Button mapButton = (Button) findViewById(R.id.mapButt);
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, MapMainActivity.class));
-            }
-        });*/
     }
 
     private Callback getLoginCallback() {
@@ -113,6 +105,8 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             return retval;
