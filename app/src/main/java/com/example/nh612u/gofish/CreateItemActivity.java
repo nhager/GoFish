@@ -4,12 +4,19 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class CreateItemActivity extends AppCompatActivity {
 
@@ -39,7 +46,6 @@ public class CreateItemActivity extends AppCompatActivity {
     public String[] getEvents(){
         String[] strs = {"David Purcell","Phillp-a","Bilanco"};
         return strs;
-
     }
 
     public void scanQR(View v) {
@@ -61,10 +67,31 @@ public class CreateItemActivity extends AppCompatActivity {
                 String lines[] = contents.split("\\r?\\n");
                 itemName = lines[0];
                 itemType = lines[1];
-                Toast toast = Toast.makeText(this, "Added " + itemName + " to " , Toast.LENGTH_LONG);
-                toast.show();
-                //TODO: Call database to create item.
+                String eventId = "1";
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.accumulate("item_name", itemName);
+                    jsonObject.accumulate("item_type", itemType);
+                    jsonObject.accumulate("item_event", eventId);
+                    HttpHelper httpHelper = new HttpHelper(postCreateItemCallback());
+                    httpHelper.POST(getApplicationContext(), HttpHelper.TABLE.ITEM, jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         }
+    }
+
+    private Handler.Callback postCreateItemCallback() {
+        final Handler.Callback callback = new Handler.Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                return true;
+            }
+        };
+        return callback;
     }
 }

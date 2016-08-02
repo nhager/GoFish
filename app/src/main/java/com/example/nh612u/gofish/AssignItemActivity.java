@@ -81,39 +81,37 @@ public class AssignItemActivity extends AppCompatActivity {
             String assignItem = user + ',' + itemName + ',' + itemType;
             toast = Toast.makeText(this, assignItem, Toast.LENGTH_LONG);
             toast.show();
-            /*try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("event_name", finalInformation[0]);
-                jsonObject.accumulate("event_desc", finalInformation[1]);
-                jsonObject.accumulate("event_address", finalInformation[2]);
-                jsonObject.accumulate("event_organizer", finalInformation[3]);
-                jsonObject.accumulate("event_date", finalInformation[4]);
-                jsonObject.accumulate("event_time", finalInformation[5]);
 
+            String tempUserId = "1";
+
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("item_name", itemName);
+                jsonObject.accumulate("item_type", itemType);
+                jsonObject.accumulate("item_user", tempUserId);
                 HttpHelper httpHelper = new HttpHelper(getAssignItemCallback());
                 httpHelper.POST(getApplicationContext(), HttpHelper.TABLE.ITEM, jsonObject);
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-            }*/
-            startActivity(new Intent(AssignItemActivity.this, InventoryActivity.class));
+            }
+            //startActivity(new Intent(AssignItemActivity.this, InventoryActivity.class));
         } else {
             toast = Toast.makeText(this, "Please scan an item", Toast.LENGTH_LONG);
             toast.show();
         }
     }
-    /*
+
     private Handler.Callback getAssignItemCallback() {
         final Handler.Callback callback = new Handler.Callback() {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                startActivity(new Intent(AssignItemActivity.this, Admin_Activity.class));
+                //startActivity(new Intent(AssignItemActivity.this, Admin_Activity.class));
                 return true;
             }
         };
         return callback;
-    }*/
-
+    }
 }
