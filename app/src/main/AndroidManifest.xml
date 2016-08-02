@@ -38,7 +38,7 @@
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".DeleteActivity" />
-        <activity android:name=".Admin_Activity" />
+        <activity android:name=".AdminViewActivity" />
         <activity android:name=".MapMainActivity" />
         <activity android:name=".MapAddMarkerActivity"></activity>
         <activity

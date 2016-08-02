@@ -11,22 +11,24 @@
         android:id="@+id/textView13"
         android:layout_above="@+id/imageView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="42dp" />
+        android:layout_marginBottom="32dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView2"
         android:src="@drawable/logo"
-        android:layout_marginBottom="64dp"
         android:layout_above="@+id/button3"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/textView13"
+        android:layout_alignStart="@+id/textView13"
+        android:layout_marginBottom="45dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_activity_register_user_2"
         android:id="@+id/button3"
+        android:layout_marginBottom="25dp"
         android:layout_above="@+id/button4"
         android:layout_alignLeft="@+id/button4"
         android:layout_alignStart="@+id/button4" />
@@ -36,7 +38,7 @@
         android:layout_height="wrap_content"
         android:text="@string/title_activity_login"
         android:id="@+id/button4"
-        android:layout_marginBottom="83dp"
+        android:layout_marginBottom="96dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

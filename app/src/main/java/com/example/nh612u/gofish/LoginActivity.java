@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 int retVal = isLoginSuccessful(response);
                 if (retVal == 1) {
 
-                    Intent intent = new Intent(getBaseContext(), Admin_Activity.class);
+                    Intent intent = new Intent(getBaseContext(), AdminViewActivity.class);
                     intent.putExtra("email", email);
                     startActivity(intent);
                 } else if (retVal == 2) {

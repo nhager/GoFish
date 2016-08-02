@@ -13,36 +13,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="DELETE TEXT"
+        android:text="Delete Event"
         android:id="@+id/labelDelete"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/eventValue"
+        android:text="Event information"
+        android:layout_marginTop="87dp"
         android:layout_below="@+id/labelDelete"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="59dp"
-        android:text="asdfdf" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="By_ID"
+        android:text="By ID"
         android:id="@+id/btnEventId"
+        android:layout_marginTop="76dp"
         android:layout_below="@+id/eventValue"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="135dp" />
+        android:layout_alignLeft="@+id/btnEventName"
+        android:layout_alignStart="@+id/btnEventName" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BY_NAME"
+        android:text="BY NAME"
         android:id="@+id/btnEventName"
         android:layout_below="@+id/btnEventId"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

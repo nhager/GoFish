@@ -45,9 +45,9 @@
         android:layout_height="wrap_content"
         android:text="Create Item"
         android:id="@+id/createButton"
-        android:layout_below="@+id/eventFilterSpinner"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:onClick="scanQR" />
+        android:onClick="scanQR"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/textView8"
+        android:layout_alignStart="@+id/textView8" />
 
 </RelativeLayout>

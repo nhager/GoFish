@@ -14,18 +14,16 @@
         android:layout_height="wrap_content"
         android:text="@string/create_user"
         android:id="@+id/createUser"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/deleteUser"
-        android:layout_alignEnd="@+id/deleteUser" />
+        android:layout_below="@+id/inventoryButton"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/delete_user"
         android:id="@+id/deleteUser"
-        android:layout_alignTop="@+id/createUser"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp" />
+        android:layout_below="@+id/createUser"
+        android:layout_centerHorizontal="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -34,8 +32,7 @@
         android:text="CREATE EVENT"
         android:id="@+id/createEvent"
         android:layout_below="@+id/deleteUser"
-        android:layout_alignLeft="@+id/deleteUser"
-        android:layout_alignStart="@+id/deleteUser" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -67,6 +64,7 @@
         android:layout_height="wrap_content"
         android:text="Inventory"
         android:id="@+id/inventoryButton"
-        android:layout_above="@+id/createUser"
+        android:layout_marginTop="60dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
