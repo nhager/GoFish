@@ -32,11 +32,11 @@ public class RegisterUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user_1);
-        nextButton = (Button) findViewById(R.id.nextButton);
         setNextButtonOnClickListener();
     }
 
     private void setNextButtonOnClickListener() {
+        nextButton = (Button) findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

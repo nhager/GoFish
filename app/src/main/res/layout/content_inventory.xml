@@ -13,7 +13,7 @@
     tools:showIn="@layout/activity_inventory">
 
     <Button
-        android:layout_width="250dp"
+        android:layout_width="150dp"
     android:layout_height="80dp"
     android:layout_gravity="center"
         android:gravity="center"
@@ -21,10 +21,68 @@
     android:textSize="18dp"
         android:nestedScrollingEnabled="true"
         android:id="@+id/assignItemButton"
-        android:layout_marginTop="178dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
     </Button>
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Create Item"
+        android:textSize="18dp"
+        android:nestedScrollingEnabled="true"
+        android:id="@+id/createItemButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Event"
+        android:id="@+id/textView14"
+        android:layout_marginTop="41dp"
+        android:layout_below="@+id/assignItemButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/eventFilterSpinner"
+        android:layout_alignTop="@+id/textView14"
+        android:layout_toRightOf="@+id/textView14"
+        android:layout_toEndOf="@+id/textView14" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Type"
+        android:id="@+id/textView15"
+        android:layout_below="@+id/eventFilterSpinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/typeFilterSpinner"
+        android:layout_below="@+id/eventFilterSpinner"
+        android:layout_alignLeft="@+id/eventFilterSpinner"
+        android:layout_alignStart="@+id/eventFilterSpinner" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/inventoryList"
+        android:layout_below="@+id/typeFilterSpinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

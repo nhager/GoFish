@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,46 +7,42 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".CreateItemActivity"
-    tools:showIn="@layout/activity_create_item">
+    tools:context="com.example.nh612u.gofish.DeleteEventActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Create Item"
-        android:id="@+id/textView8"
+        android:text="DELETE TEXT"
+        android:id="@+id/labelDelete"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Event:"
-        android:id="@+id/textView13"
-        android:layout_below="@+id/textView8"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="64dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/eventFilterSpinner"
-        android:layout_alignBottom="@+id/textView13"
-        android:layout_toRightOf="@+id/textView13"
-        android:layout_toEndOf="@+id/textView13" />
+        android:id="@+id/eventValue"
+        android:layout_below="@+id/labelDelete"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp"
+        android:text="asdfdf" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Item"
-        android:id="@+id/createButton"
-        android:layout_below="@+id/eventFilterSpinner"
+        android:text="By_ID"
+        android:id="@+id/btnEventId"
+        android:layout_below="@+id/eventValue"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:onClick="scanQR" />
+        android:layout_marginTop="135dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BY_NAME"
+        android:id="@+id/btnEventName"
+        android:layout_below="@+id/btnEventId"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp" />
 
 </RelativeLayout>
