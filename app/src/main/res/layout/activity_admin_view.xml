@@ -63,4 +63,20 @@
         android:layout_below="@+id/viewEvent"
         android:layout_alignLeft="@+id/viewEvent"
         android:layout_alignStart="@+id/viewEvent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIEW MAP"
+        android:id="@+id/viewMap"
+        android:layout_below="@+id/joinEvent"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INVENTORY"
+        android:id="@+id/inventoryButton"
+        android:layout_above="@+id/deleteUser"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
