@@ -116,13 +116,7 @@ public class AddEC extends AppCompatActivity {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                Bundle b = getIntent().getExtras();
-                if (b != null) {
-                    Intent intent = new Intent(getBaseContext(), Veteran_Activity.class);
-                    intent.putExtra("email", bundle.getString("email"));
-                    intent.putExtra("id", bundle.getString("id"));
-                    startActivity(intent);
-                }
+                onBackPressed();
                 return true;
             }
         };

@@ -14,17 +14,51 @@
         android:layout_height="wrap_content"
         android:text="@string/addEC"
         android:id="@+id/addEC"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="43dp" />
+        android:layout_above="@+id/deleteEC"
+        android:layout_alignRight="@+id/deleteEC"
+        android:layout_alignEnd="@+id/deleteEC"
+        android:layout_alignLeft="@+id/deleteEC"
+        android:layout_alignStart="@+id/deleteEC" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/deleteEC"
         android:id="@+id/deleteEC"
-        android:layout_below="@+id/addEC"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_above="@+id/viewEventsVet"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VIEW EVENTS"
+        android:id="@+id/viewEventsVet"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/deleteEC"
+        android:layout_alignEnd="@+id/deleteEC"
+        android:layout_alignLeft="@+id/addEC"
+        android:layout_alignStart="@+id/addEC" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JOIN EVENTS"
+        android:id="@+id/joinEventsVet"
+        android:layout_below="@+id/viewEventsVet"
+        android:layout_alignRight="@+id/addMapVet"
+        android:layout_alignEnd="@+id/addMapVet"
+        android:layout_alignLeft="@+id/addMapVet"
+        android:layout_alignStart="@+id/addMapVet" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD MAP MARKER"
+        android:id="@+id/addMapVet"
+        android:layout_below="@+id/joinEventsVet"
+        android:layout_alignRight="@+id/deleteEC"
+        android:layout_alignEnd="@+id/deleteEC"
+        android:layout_alignLeft="@+id/deleteEC"
+        android:layout_alignStart="@+id/deleteEC" />
+
 </RelativeLayout>

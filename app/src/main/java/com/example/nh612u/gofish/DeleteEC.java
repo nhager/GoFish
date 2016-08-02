@@ -1,15 +1,19 @@
 package com.example.nh612u.gofish;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -24,35 +28,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DeleteEC extends AppCompatActivity {
-
+    Button delete;
+    int selected = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_ec);
-        final Button deleteButton = (Button) findViewById(R.id.deleteECButton);
-        try {
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Spinner sItems = (Spinner) findViewById(R.id.ecSpinner);
-                    String selected = sItems.getSelectedItem().toString();
-                    Scanner scanner = new Scanner(selected);
-                    String id = scanner.next();
-                    try {
-                        JSONObject jsonObject = new JSONObject();
-
-                        jsonObject.accumulate(DBHelper.FeedEntry.COLUMN_NAME_EMAIL, id);
-                        HttpHelper httpHelper = new HttpHelper(getDeleteUserCallback());
-                        httpHelper.DELETE(getApplicationContext(), HttpHelper.TABLE.EMERGENCY_CONTACT, jsonObject);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } catch (NullPointerException e) {
-            Log.wtf("Error:", "Null Pointer Exception thrown");
-        }
         final Handler.Callback callback = getSearchCallback();
         HttpHelper httpHelper = new HttpHelper(callback);
         JSONObject jsonObject = new JSONObject();
@@ -65,12 +46,36 @@ public class DeleteEC extends AppCompatActivity {
                 jsonObject.accumulate("user_id", temp);
                 httpHelper.GET(HttpHelper.TABLE.EMERGENCY_CONTACT, jsonObject);
             }
-
         } catch (JSONException e) {
             Log.wtf("Error:", "JSON Exception thrown");
         }
-    }
+        delete = (Button) findViewById(R.id.deleteEC);
+        setDeleteOnClick();
 
+    }
+    private void setDeleteOnClick() {
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ListView listItems = (ListView) findViewById(R.id.deleteECList);
+                String temp = (String)listItems.getItemAtPosition(selected);
+                Scanner scanner =  new Scanner(temp);
+                String id = scanner.next();
+                id = id.trim();
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.accumulate(DBHelper.FeedEntry.COLUMN_NAME_EMAIL, id);
+                    HttpHelper httpHelper = new HttpHelper(getDeleteUserCallback());
+                    httpHelper.DELETE(getApplicationContext(), HttpHelper.TABLE.EMERGENCY_CONTACT, jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
     private boolean addItems(String response) {
         boolean retval = false;
         try {
@@ -98,10 +103,19 @@ public class DeleteEC extends AppCompatActivity {
                 }
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                    cur, android.R.layout.simple_spinner_item, spinnerArray);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            Spinner sItems = (Spinner) findViewById(R.id.ecSpinner);
-            sItems.setAdapter(adapter);
+                    cur, android.R.layout.simple_list_item_1, spinnerArray);
+            ListView listItems = (ListView) findViewById(R.id.deleteECList);
+            listItems.setAdapter(adapter);
+            listItems.setOnItemClickListener(new ListView.OnItemClickListener()  {
+                @Override
+                public void onItemClick(AdapterView<?> a, View v, int i, long l) {
+                    for(int k = 0; k < a.getChildCount(); k++){
+                        a.getChildAt(k).setBackgroundColor(Color.WHITE);
+                    }
+                    v.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    selected = i;
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         } finally {
@@ -120,6 +134,7 @@ public class DeleteEC extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 "User deleted.", Toast.LENGTH_SHORT);
                         toast.show();
+                        onBackPressed();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -9,14 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".DeleteActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:id="@+id/deleteButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
     <ListView
         android:descendantFocusability="blocksDescendants"
         android:layout_width="wrap_content"
@@ -25,7 +17,15 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/deleteButton" />
+        android:layout_above="@+id/deleteUserButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DELETE"
+        android:id="@+id/deleteUserButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
