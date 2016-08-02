@@ -7,17 +7,17 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".RegisterUserActivity">
+    tools:context=".AddEC">
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/registerUserFirst"
+        android:id="@+id/addECFirst"
         android:layout_alignTop="@+id/textView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignRight="@+id/addECLast"
+        android:layout_alignEnd="@+id/addECLast"
         android:layout_toRightOf="@+id/textView2"
         android:layout_toEndOf="@+id/textView2" />
 
@@ -26,8 +26,8 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress|textPersonName"
         android:ems="10"
-        android:id="@+id/registerUserLast"
-        android:layout_below="@+id/registerUserFirst"
+        android:id="@+id/addECLast"
+        android:layout_below="@+id/addECFirst"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/textView2"
@@ -38,8 +38,8 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:ems="10"
-        android:id="@+id/registerUserAddress"
-        android:layout_below="@+id/registerUserLast"
+        android:id="@+id/addECAddress"
+        android:layout_below="@+id/addECLast"
         android:layout_toRightOf="@+id/textView2"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -49,8 +49,8 @@
         android:layout_height="wrap_content"
         android:inputType="textPostalAddress"
         android:ems="10"
-        android:id="@+id/registerUserCity"
-        android:layout_below="@+id/registerUserAddress"
+        android:id="@+id/addECCity"
+        android:layout_below="@+id/addECAddress"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/textView3"
@@ -59,23 +59,23 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/registerUserState"
-        android:layout_below="@+id/registerUserCity"
-        android:layout_alignRight="@+id/registerUserCity"
-        android:layout_alignEnd="@+id/registerUserCity"
+        android:id="@+id/addECState"
+        android:layout_below="@+id/addECCity"
+        android:layout_alignRight="@+id/addECCity"
+        android:layout_alignEnd="@+id/addECCity"
         android:inputType="text"
         android:layout_toEndOf="@+id/textView4"
-        android:layout_alignLeft="@+id/registerUserZip"
-        android:layout_alignStart="@+id/registerUserZip"
+        android:layout_alignLeft="@+id/addECZip"
+        android:layout_alignStart="@+id/addECZip"
         android:layout_toRightOf="@+id/textView4" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/registerUserZip"
-        android:layout_below="@+id/registerUserState"
-        android:layout_alignRight="@+id/registerUserCity"
-        android:layout_alignEnd="@+id/registerUserCity"
+        android:id="@+id/addECZip"
+        android:layout_below="@+id/addECState"
+        android:layout_alignRight="@+id/addECCity"
+        android:layout_alignEnd="@+id/addECCity"
         android:inputType="phone"
         android:layout_toRightOf="@+id/textView7"
         android:layout_toEndOf="@+id/textView7" />
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:text="@string/last"
         android:id="@+id/textView2"
-        android:layout_below="@+id/registerUserFirst"
+        android:layout_below="@+id/addECFirst"
         android:layout_alignRight="@+id/textView7"
         android:layout_alignEnd="@+id/textView7" />
 
@@ -103,9 +103,9 @@
         android:layout_height="wrap_content"
         android:text="@string/address"
         android:id="@+id/textView3"
-        android:layout_alignTop="@+id/registerUserAddress"
-        android:layout_above="@+id/registerUserCity"
-        android:layout_toLeftOf="@+id/registerUserAddress"
+        android:layout_alignTop="@+id/addECAddress"
+        android:layout_above="@+id/addECCity"
+        android:layout_toLeftOf="@+id/addECAddress"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -114,16 +114,16 @@
         android:layout_height="wrap_content"
         android:text="@string/city"
         android:id="@+id/textView4"
-        android:layout_alignTop="@+id/registerUserCity"
-        android:layout_toLeftOf="@+id/registerUserAddress"
-        android:layout_toStartOf="@+id/registerUserAddress" />
+        android:layout_alignTop="@+id/addECCity"
+        android:layout_toLeftOf="@+id/addECAddress"
+        android:layout_toStartOf="@+id/addECAddress" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/state"
         android:id="@+id/textView5"
-        android:layout_below="@+id/registerUserCity"
+        android:layout_below="@+id/addECCity"
         android:layout_alignRight="@+id/textView4"
         android:layout_alignEnd="@+id/textView4" />
 
@@ -132,47 +132,57 @@
         android:layout_height="wrap_content"
         android:text="@string/zip"
         android:id="@+id/textView6"
-        android:layout_below="@+id/registerUserState"
-        android:layout_toLeftOf="@+id/registerUserState"
-        android:layout_toStartOf="@+id/registerUserState" />
+        android:layout_below="@+id/addECState"
+        android:layout_toLeftOf="@+id/addECState"
+        android:layout_toStartOf="@+id/addECState" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/registerUserPhone"
-        android:layout_below="@+id/registerUserZip"
+        android:id="@+id/addECPhone"
         android:inputType="phone"
-        android:layout_alignRight="@+id/registerUserCity"
-        android:layout_alignEnd="@+id/registerUserCity"
-        android:layout_alignLeft="@+id/registerUserCity"
-        android:layout_alignStart="@+id/registerUserCity" />
+        android:layout_alignTop="@+id/textView7"
+        android:layout_toRightOf="@+id/textView7"
+        android:layout_alignRight="@+id/addECZip"
+        android:layout_alignEnd="@+id/addECZip" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/phone"
         android:id="@+id/textView7"
-        android:layout_below="@+id/registerUserZip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/registerUserRole"
-        android:entries="@array/user_roles"
-        android:spinnerMode="dropdown"
-        android:layout_below="@+id/registerUserPhone"
+        android:layout_below="@+id/addECZip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/registerUserButton"
+        android:text="Add Contact"
+        android:id="@+id/addECButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="34dp" />
+        android:layout_marginBottom="82dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/addECEmail"
+        android:layout_below="@+id/addECPhone"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/addECPhone"
+        android:layout_alignStart="@+id/addECPhone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:id="@+id/textView8"
+        android:layout_alignTop="@+id/addECEmail"
+        android:layout_toLeftOf="@+id/addECEmail"
+        android:layout_toStartOf="@+id/addECEmail" />
 
 </RelativeLayout>

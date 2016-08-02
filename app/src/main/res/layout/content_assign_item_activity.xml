@@ -46,10 +46,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Item Name"
         android:id="@+id/itemName"
+        android:layout_marginTop="23dp"
         android:layout_below="@+id/scanQR"
-        android:layout_alignRight="@+id/textView11"
-        android:layout_alignEnd="@+id/textView11"
-        android:layout_marginTop="36dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,9 +74,9 @@
         android:layout_height="wrap_content"
         android:text="Assign"
         android:id="@+id/assignButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="73dp"
         android:nestedScrollingEnabled="false"
-        android:onClick="assignItem" />
+        android:onClick="assignItem"
+        android:layout_below="@+id/itemType"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp" />
 </RelativeLayout>
