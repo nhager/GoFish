@@ -91,7 +91,7 @@ public class InventoryActivity extends AppCompatActivity {
     //TODO: Get event list from database.
     //TODO: User event object instead of string.
     public String[] getEvents(){
-        String[] strs = {"David Purcell","Phillp-a","Bilanco"};
+        String[] strs = {"David Purcell","Phillp-a","Blanco"};
         return strs;
     }
 

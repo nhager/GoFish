@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event Name"
+        android:text="Event name"
         android:id="@+id/labelName"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -57,7 +57,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event Time"
+        android:text="Event time"
         android:id="@+id/labelTime"
         android:layout_below="@+id/textView8"
         android:layout_alignParentLeft="true"

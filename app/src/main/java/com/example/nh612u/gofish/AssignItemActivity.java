@@ -108,7 +108,7 @@ public class AssignItemActivity extends AppCompatActivity {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                //startActivity(new Intent(AssignItemActivity.this, Admin_Activity.class));
+                //startActivity(new Intent(AssignItemActivity.this, AdminViewActivity.class));
                 return true;
             }
         };

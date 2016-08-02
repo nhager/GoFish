@@ -7,8 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".RegisterUserActivity"
-    tools:showIn="@layout/activity_register_user_1">
+    tools:context=".RegisterUserActivity">
 
     <EditText
         android:layout_width="wrap_content"
@@ -18,8 +17,7 @@
         android:id="@+id/registerUserEmail"
         android:layout_marginTop="39dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -27,40 +25,36 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/registerUserPassword"
-        android:layout_marginTop="51dp"
+        android:layout_marginTop="55dp"
         android:layout_below="@+id/registerUserEmail"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@+id/registerUserEmail"
+        android:layout_alignStart="@+id/registerUserEmail" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/email"
         android:id="@+id/textView9"
-        android:layout_alignBottom="@+id/registerUserEmail"
-        android:layout_toRightOf="@+id/registerUserEmail"
         android:layout_alignTop="@+id/registerUserEmail"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/textView10"
+        android:layout_alignEnd="@+id/textView10" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/password"
         android:id="@+id/textView10"
+        android:layout_alignBaseline="@+id/registerUserPassword"
         android:layout_alignBottom="@+id/registerUserPassword"
-        android:layout_toRightOf="@+id/registerUserPassword"
-        android:layout_alignTop="@+id/registerUserPassword"
-        android:layout_alignRight="@+id/textView9"
-        android:layout_alignEnd="@+id/textView9" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Next"
         android:id="@+id/nextButton"
+        android:layout_marginTop="115dp"
         android:layout_below="@+id/registerUserPassword"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="115dp" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
