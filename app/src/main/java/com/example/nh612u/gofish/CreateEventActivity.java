@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +40,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 EditText[] information = new EditText[6];
                 String[] finalInformation = new String[6];
                 information[0] = ((EditText) findViewById(R.id.eventName));
-                information[1] = ((EditText) findViewById(R.id.eventDesc));
+                information[1] = ((EditText) findViewById(R.id.eventDescription));
                 information[2] = ((EditText) findViewById(R.id.eventAddress));
                 information[3] = ((EditText) findViewById(R.id.eventOrganizer));
                 information[4] = ((EditText) findViewById(R.id.eventDate));

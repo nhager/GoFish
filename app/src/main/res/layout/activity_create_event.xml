@@ -23,37 +23,34 @@
         android:layout_height="wrap_content"
         android:text="Event Description"
         android:id="@+id/labelDesc"
-        android:layout_below="@+id/labelName"
+        android:layout_below="@+id/eventName"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="55dp" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Event Address"
         android:id="@+id/labelAddress"
-        android:layout_below="@+id/labelDesc"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="51dp" />
+        android:layout_below="@+id/eventDescription"
+        android:layout_alignRight="@+id/labelName"
+        android:layout_alignEnd="@+id/labelName" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="eventOrganizer"
+        android:text="Event Organizer"
         android:id="@+id/labelOrganizer"
-        android:layout_below="@+id/labelAddress"
+        android:layout_below="@+id/eventAddress"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="33dp" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="event_date"
+        android:text="Event Date"
         android:id="@+id/textView8"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/eventOrganizer"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -70,34 +67,22 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:id="@+id/eventTime"
-        android:layout_alignTop="@+id/labelTime"
-        android:layout_toRightOf="@+id/labelDesc"
-        android:layout_toEndOf="@+id/labelDesc"
-        android:layout_marginLeft="41dp"
-        android:layout_marginStart="41dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
         android:id="@+id/eventDate"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/eventTime"
-        android:layout_alignStart="@+id/eventTime" />
+        android:layout_below="@+id/eventOrganizer"
+        android:layout_alignLeft="@+id/eventOrganizer"
+        android:layout_alignStart="@+id/eventOrganizer" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/eventOrganizer"
-        android:layout_above="@+id/eventDate"
-        android:layout_alignLeft="@+id/eventDate"
-        android:layout_alignStart="@+id/eventDate" />
+        android:layout_below="@+id/eventAddress"
+        android:layout_alignLeft="@+id/eventAddress"
+        android:layout_alignStart="@+id/eventAddress" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -105,28 +90,39 @@
         android:inputType="textPostalAddress"
         android:ems="10"
         android:id="@+id/eventAddress"
-        android:layout_above="@+id/eventOrganizer"
-        android:layout_alignLeft="@+id/eventOrganizer"
-        android:layout_alignStart="@+id/eventOrganizer" />
+        android:layout_below="@+id/eventDescription"
+        android:layout_alignLeft="@+id/eventDescription"
+        android:layout_alignStart="@+id/eventDescription" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/eventDesc"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/eventDescription"
         android:layout_alignTop="@+id/labelDesc"
-        android:layout_alignLeft="@+id/eventAddress"
-        android:layout_alignStart="@+id/eventAddress" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/eventName"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/eventDesc"
-        android:layout_alignStart="@+id/eventDesc" />
+        android:layout_alignLeft="@+id/eventDescription"
+        android:layout_alignStart="@+id/eventDescription" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/eventTime"
+        android:layout_below="@+id/eventDate"
+        android:layout_alignLeft="@+id/eventDate"
+        android:layout_alignStart="@+id/eventDate" />
 
     <Button
         android:layout_width="wrap_content"
@@ -134,8 +130,8 @@
         android:text="Create Event"
         android:id="@+id/createEvent"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/eventTime"
-        android:layout_alignStart="@+id/eventTime"
+        android:layout_alignLeft="@+id/eventDate"
+        android:layout_alignStart="@+id/eventDate"
         android:layout_marginBottom="45dp" />
 
 </RelativeLayout>
