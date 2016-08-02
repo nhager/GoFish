@@ -38,7 +38,8 @@ public class HttpHelper {
         EMERGENCY_CONTACT,
         EVENT_SIGNUP,
         EVENTS,
-        MAP_MARKER;
+        MAP_MARKER,
+        USERS;
 }
 
     private static final String SERVER_URL = "http://go-fish-api.herokuapp.com/";
@@ -183,6 +184,8 @@ public class HttpHelper {
                 return "map_marker";
             case EVENTS:
                 return "events";
+            case USERS:
+                return "users";
             default:
                 return null;
         }
