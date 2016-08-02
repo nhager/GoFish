@@ -46,6 +46,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         if (mCurrentLocation == null) {
             try {
                 mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                Log.i("LOCATIONSERVICE", "Latitude: " + mCurrentLocation.getLatitude() + " Longitude: " + mCurrentLocation.getLongitude());
                 // TODO: API call to update table
             } catch (SecurityException se) {
 
@@ -79,6 +80,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     protected void startLocationUpdates() {
         try {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            Log.i("LOCATIONSERVICE", "Latitude: " + mCurrentLocation.getLatitude() + " Longitude: " + mCurrentLocation.getLongitude());
         } catch (SecurityException se) {
 
         }
