@@ -90,7 +90,7 @@ public class JoinEvent extends AppCompatActivity {
 
             }
         });
-        getAllEvents();
+        //getAllEvents();
     }
     private boolean addItems(String response) {
         boolean retval = false;
