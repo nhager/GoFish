@@ -3,6 +3,8 @@ package com.example.nh612u.gofish;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,6 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +29,7 @@ public class InventoryActivity extends AppCompatActivity {
 
     Spinner eventSelect;
     Spinner typeSelect;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +45,7 @@ public class InventoryActivity extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         eventSelect.setAdapter(dataAdapter);
 
-        String[] types = getTypes();
         typeSelect = (Spinner) findViewById(R.id.typeFilterSpinner);
-        ArrayAdapter<String> typeDataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, types);
-        typeDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeSelect.setAdapter(typeDataAdapter);
 
         final Button createItemButton = (Button) findViewById(R.id.createItemButton);
         createItemButton.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +64,8 @@ public class InventoryActivity extends AppCompatActivity {
         });
 
         //http://www.vogella.com/tutorials/AndroidListView/article.html#androidlists
-        final ListView listview = (ListView) findViewById(R.id.inventoryList);
+        listView = (ListView) findViewById(R.id.inventoryList);
+        /*
         String[] values = getInventory();
 
         final ArrayList<String> list = new ArrayList<String>();
@@ -69,8 +75,9 @@ public class InventoryActivity extends AppCompatActivity {
         final StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
+        */
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
@@ -80,12 +87,116 @@ public class InventoryActivity extends AppCompatActivity {
             }
 
         });
+
+        HttpHelper httpHelperType = new HttpHelper(getTypesCallback());
+        JSONObject jsonObjectType = new JSONObject();
+        httpHelperType.GET(HttpHelper.TABLE.ITEM_TYPE, jsonObjectType);
+
+        HttpHelper httpHelperItems = new HttpHelper(getItemsCallback());
+        JSONObject jsonObjectItems = new JSONObject();
+        httpHelperItems.GET(HttpHelper.TABLE.ITEMS, jsonObjectItems);
+    }
+    private Handler.Callback getTypesCallback() {
+        final Handler.Callback callback = new Handler.Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                addTypes(response);
+                return true;
+            }
+        };
+        return callback;
+    }
+    private boolean addTypes(String response) {
+        boolean retval = false;
+        try {
+            Object json = new JSONTokener(response).nextValue();
+            List<String> spinnerArray =  new ArrayList<>();
+            final Context cur = this;
+            if(json instanceof JSONObject){
+                JSONObject jsonObj = new JSONObject(response);
+                if(jsonObj.has("message") &&
+                        jsonObj.get("message").equals("User with provided parameters not found.")) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Types not found.", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+
+                    spinnerArray.add(jsonObj.getString("item_type"));
+                }
+            } else if (json instanceof JSONArray){
+                JSONArray jsonObj = new JSONArray(response);
+                for(int i = 0; i < jsonObj.length(); i++){
+
+                    spinnerArray.add(jsonObj.getJSONObject(i).
+                            getString("item_type"));
+                }
+            }
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, spinnerArray);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            typeSelect.setAdapter(dataAdapter);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
+            return retval;
+        }
     }
 
-    //TODO: Get type list from database.
-    public String[] getTypes(){
-        String[] strs = {"Kayak","Buffalo","Candy"};
-        return strs;
+    private Handler.Callback getItemsCallback() {
+        final Handler.Callback callback = new Handler.Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                addItems(response);
+                return true;
+            }
+        };
+        return callback;
+    }
+    private boolean addItems(String response) {
+        boolean retval = false;
+        try {
+            Object json = new JSONTokener(response).nextValue();
+            List<String> spinnerArray =  new ArrayList<>();
+            final Context cur = this;
+            if(json instanceof JSONObject){
+                JSONObject jsonObj = new JSONObject(response);
+                if(jsonObj.has("message") &&
+                        jsonObj.get("message").equals("User with provided parameters not found.")) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Types not found.", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+
+                    spinnerArray.add(jsonObj.getString("item_name") + " type: " +
+                            jsonObj.getString("item_type") + " " + " Checked Out: " +
+                            jsonObj.getString("userId") == null ? "Y":"N");
+                }
+            } else if (json instanceof JSONArray){
+                JSONArray jsonObj = new JSONArray(response);
+                for(int i = 0; i < jsonObj.length(); i++){
+                    spinnerArray.add(jsonObj.getJSONObject(i).getString("item_type")+
+                            jsonObj.getJSONObject(i).getString("item_name") + " Checked Out: " +
+                            (jsonObj.getJSONObject(i).getString("assigned_user_id") == "" ? "Yes":"No"));
+                    /*
+                    spinnerArray.add(jsonObj.getJSONObject(i).getString("item_name") + " type: " +
+                            jsonObj.getJSONObject(i).getString("item_type") + " " + " Checked Out: " +
+                            jsonObj.getJSONObject(i).getString("assigned_user_id") == null ? "Y":"N");
+                     */
+                }
+            }
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, spinnerArray);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            listView.setAdapter(dataAdapter);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
+            return retval;
+        }
     }
 
     //TODO: Get event list from database.
