@@ -20,24 +20,14 @@
         android:layout_alignRight="@+id/joinButton"
         android:layout_alignEnd="@+id/joinButton" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/eventID123"
-        android:layout_below="@+id/labelID123"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="JOIN"
         android:id="@+id/joinButton"
-        android:layout_below="@+id/eventID123"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="97dp" />
+        android:layout_marginTop="97dp"
+        android:layout_below="@+id/labelID123" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,18 +36,24 @@
         android:text="USER ID"
         android:id="@+id/userlabelid123"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/eventID123"
-        android:layout_alignStart="@+id/eventID123"
-        android:layout_alignRight="@+id/eventID123"
-        android:layout_alignEnd="@+id/eventID123" />
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="numberSigned"
         android:ems="10"
         android:id="@+id/userID123"
         android:layout_below="@+id/userlabelid123"
-        android:layout_alignLeft="@+id/userlabelid123"
-        android:layout_alignStart="@+id/userlabelid123" />
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="10"
+        android:id="@+id/eventID123"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

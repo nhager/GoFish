@@ -13,36 +13,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="DELETE TEXT"
+        android:text="By_ID:"
         android:id="@+id/labelDelete"
+        android:layout_marginTop="104dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/labelName"
+        android:layout_alignStart="@+id/labelName" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Event"
+        android:id="@+id/deleteEventBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="85dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="By_Name:"
+        android:id="@+id/labelName"
+        android:layout_marginTop="39dp"
+        android:layout_below="@+id/deleteByID"
+        android:layout_toLeftOf="@+id/deleteEventBtn"
+        android:layout_toStartOf="@+id/deleteEventBtn" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/eventValue"
-        android:layout_below="@+id/labelDelete"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="59dp"
-        android:text="asdfdf" />
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/deleteByID"
+        android:layout_alignTop="@+id/labelDelete"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    <Button
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="By_ID"
-        android:id="@+id/btnEventId"
-        android:layout_below="@+id/eventValue"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="135dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BY_NAME"
-        android:id="@+id/btnEventName"
-        android:layout_below="@+id/btnEventId"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/deleteByName"
+        android:layout_alignTop="@+id/labelName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
