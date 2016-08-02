@@ -14,9 +14,10 @@
         android:layout_height="wrap_content"
         android:text="@string/create_user"
         android:id="@+id/createUser"
-        android:layout_below="@+id/inventoryButton"
-        android:layout_alignRight="@+id/deleteUser"
-        android:layout_alignEnd="@+id/deleteUser" />
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/deleteUser"
+        android:layout_alignStart="@+id/deleteUser"
+        android:layout_marginTop="94dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -57,26 +58,25 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="JOIN EVENT"
+        android:id="@+id/joinEvent"
+        android:layout_below="@+id/viewEvent"
+        android:layout_alignLeft="@+id/viewEvent"
+        android:layout_alignStart="@+id/viewEvent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="VIEW MAP"
         android:id="@+id/viewMap"
-        android:layout_below="@+id/viewEvent"
+        android:layout_below="@+id/joinEvent"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Inventory"
+        android:text="INVENTORY"
         android:id="@+id/inventoryButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/viewEvent"
-        android:layout_alignStart="@+id/viewEvent"
-        android:layout_marginTop="82dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/locations"
-        android:id="@+id/locationButton"
-        android:layout_below="@+id/viewMap"
+        android:layout_above="@+id/deleteUser"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

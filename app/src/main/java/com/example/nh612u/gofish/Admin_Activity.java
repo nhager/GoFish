@@ -9,19 +9,28 @@ import android.widget.Button;
 
 public class Admin_Activity extends AppCompatActivity {
 
+    String email;
+    String id;
+    String role;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_view);
         final Button button = (Button) findViewById(R.id.createUser);
-        Bundle email = getIntent().getExtras();
-        if (email != null) {
-            String emailAddr = email.getString("email");
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            email = b.getString("email");
+            id = b.getString("id");
+            role = b.getString("role");
         }
         try {
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    startActivity(new Intent(Admin_Activity.this, RegisterUserActivity.class));
+                    Intent intent = new Intent(getBaseContext(), RegisterUserActivity.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("id", id);
+                    intent.putExtra("role", role);
+                    startActivity(intent);
                 }
 
             });
@@ -32,7 +41,11 @@ public class Admin_Activity extends AppCompatActivity {
         try {
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    startActivity(new Intent(Admin_Activity.this, DeleteActivity.class));
+                    Intent intent = new Intent(getBaseContext(), DeleteActivity.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("id", id);
+                    intent.putExtra("role", role);
+                    startActivity(intent);
                 }
 
             });
@@ -45,7 +58,11 @@ public class Admin_Activity extends AppCompatActivity {
         try {
             eventAddButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    startActivity(new Intent(Admin_Activity.this, CreateEventActivity.class));
+                    Intent intent = new Intent(getBaseContext(), CreateEventActivity.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("id", id);
+                    intent.putExtra("role", role);
+                    startActivity(intent);
                 }
 
             });
@@ -57,7 +74,11 @@ public class Admin_Activity extends AppCompatActivity {
         try {
             eventDeleteButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    startActivity(new Intent(Admin_Activity.this, DeleteEventActivity.class));
+                    Intent intent = new Intent(getBaseContext(), DeleteEventActivity.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("id", id);
+                    intent.putExtra("role", role);
+                    startActivity(intent);
                 }
 
             });
@@ -69,7 +90,27 @@ public class Admin_Activity extends AppCompatActivity {
         try {
             eventViewButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    startActivity(new Intent(Admin_Activity.this, DeleteEventActivity.class));
+                    Intent intent = new Intent(getBaseContext(), ViewEvents.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("id", id);
+                    intent.putExtra("role", role);
+                    startActivity(intent);
+                }
+
+            });
+        } catch(NullPointerException e) {
+            Log.wtf("Error:", "Null Pointer Exception thrown");
+        }
+
+        final Button eventJoinButton = (Button) findViewById(R.id.joinEvent);
+        try {
+            eventJoinButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(),JoinEvent.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("id", id);
+                    intent.putExtra("role", role);
+                    startActivity(intent);
                 }
 
             });
@@ -81,7 +122,11 @@ public class Admin_Activity extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Admin_Activity.this, MapMainActivity.class));
+                Intent intent = new Intent(getBaseContext(), MapMainActivity.class);
+                intent.putExtra("email", email);
+                intent.putExtra("id", id);
+                intent.putExtra("role", role);
+                startActivity(intent);
             }
         });
 
@@ -89,7 +134,11 @@ public class Admin_Activity extends AppCompatActivity {
         inventoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Admin_Activity.this, InventoryActivity.class));
+                Intent intent = new Intent(getBaseContext(), InventoryActivity.class);
+                intent.putExtra("email", email);
+                intent.putExtra("id", id);
+                intent.putExtra("role", role);
+                startActivity(intent);
             }
         });
 

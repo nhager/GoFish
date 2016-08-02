@@ -66,14 +66,16 @@ public class LoginActivity extends AppCompatActivity {
                 final String response = bundle.getString("response");
                 int retVal = isLoginSuccessful(response);
                 if (retVal == 1) {
-
                     Intent intent = new Intent(getBaseContext(), Admin_Activity.class);
                     intent.putExtra("email", email);
+                    intent.putExtra("id", id);
+                    intent.putExtra("role", "Admin");
                     startActivity(intent);
                 } else if (retVal == 2) {
                     Intent intent = new Intent(getBaseContext(), Veteran_Activity.class);
                     intent.putExtra("email", email);
                     intent.putExtra("id", id);
+                    intent.putExtra("role", "Veteran");
                     startActivity(intent);
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(),
@@ -102,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     retval = 2;
                 }
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
