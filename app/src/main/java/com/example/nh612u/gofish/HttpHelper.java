@@ -35,9 +35,13 @@ public class HttpHelper {
     public enum TABLE {
         USER,
         EVENT,
+        EVENTS,
         EMERGENCY_CONTACT,
-        MAP_MARKER
-    }
+        EVENT_SIGNUP,
+        MAP_MARKER,
+        USERS,
+        ITEM;
+}
 
     private static final String SERVER_URL = "http://go-fish-api.herokuapp.com/";
 
@@ -50,7 +54,6 @@ public class HttpHelper {
 
     public void GET(final TABLE tableEnum, final JSONObject jsonObject) {
         final String urlString = buildURLString_GET(tableEnum, jsonObject);
-        Log.wtf("plz send help", urlString);
         client.get(urlString, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -119,6 +122,7 @@ public class HttpHelper {
         final String urlString = buildURLString_POST(tableEnum);
         StringEntity entity = new StringEntity(jsonObject.toString());
         entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        System.out.println("________DELETE___________");
         client.delete(context, urlString, entity, "application/json", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -147,19 +151,15 @@ public class HttpHelper {
     private String buildURLString_GET(final  TABLE tableEnum, final JSONObject jsonObject) {
         final String table = enumToString(tableEnum);
         String urlString = SERVER_URL + table + "?";
-        Log.wtf("table", urlString);
         try {
             Iterator<?> keys = jsonObject.keys();
-            Log.wtf("table", Integer.toString(jsonObject.length()));
             if(jsonObject.length() == 1 && jsonObject.has("user_id")){
                 urlString += "user_id" + "=" + jsonObject.getString("user_id") + "&";
-                Log.wtf("table", urlString);
             } else {
                 while (keys.hasNext()) {
                     final String key = keys.next().toString().trim();
                     final String val = jsonObject.get(key).toString().trim();
                     urlString += key + "=" + val + "&";
-                    Log.wtf("table", urlString);
                 }
             }
         } catch (JSONException e) {
@@ -178,10 +178,18 @@ public class HttpHelper {
                 return "user";
             case EVENT:
                 return "event";
+            case EVENTS:
+                return "events";
             case EMERGENCY_CONTACT:
                 return "emergency_contact";
+            case EVENT_SIGNUP:
+                return "event_signup";
             case MAP_MARKER:
                 return "map_marker";
+            case USERS:
+                return "users";
+            case ITEM:
+                return "items";
             default:
                 return null;
         }
