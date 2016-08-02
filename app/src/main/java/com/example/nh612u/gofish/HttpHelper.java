@@ -182,13 +182,10 @@ public class HttpHelper {
                 return "event_signup";
             case MAP_MARKER:
                 return "map_marker";
-<<<<<<< HEAD
             case ITEM:
                 return "item";
-=======
             case EVENTS:
                 return "events";
->>>>>>> origin/master
             default:
                 return null;
         }
