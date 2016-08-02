@@ -69,7 +69,7 @@ public class Admin_Activity extends AppCompatActivity {
         try {
             eventViewButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //startActivity(new Intent(Admin_Activity.this, DeleteEventActivity.class));
+                    startActivity(new Intent(Admin_Activity.this, ViewEvents.class));
                 }
 
             });
