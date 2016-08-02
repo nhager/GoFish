@@ -3,6 +3,7 @@ package com.example.nh612u.gofish;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -19,16 +20,23 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 public class MapViewActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
     private int mInterval = 10000;
     private Handler mHandler;
-    private double mLatitude;
-    private double mLongitude;
+    private JSONArray mResponse;
 
     private GoogleApiClient mGoogleApiClient;
     private Location mCurrentLocation;
+    private HashMap<String, Marker> mMarkerHashMap = new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +104,13 @@ public class MapViewActivity extends AppCompatActivity implements OnMapReadyCall
         // update the map
         try {
             mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if (mCurrentLocation != null)
-                Log.i("MAPACTIVITY", "Latitude: " + mCurrentLocation.getLatitude() + " Longitude: " + mCurrentLocation.getLongitude());
+            if (mCurrentLocation != null) {
+                Log.i("MAPACTIVITY", "Latitude: " + mCurrentLocation.getLatitude() +
+                        " Longitude: " + mCurrentLocation.getLongitude());
+                getLocations();
+            }
         } catch (SecurityException se) {
+
         }
     }
 
@@ -118,4 +130,58 @@ public class MapViewActivity extends AppCompatActivity implements OnMapReadyCall
         Log.i("", "Connection failed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
     }
     // TODO: Use API call to get info from DB and update admin map
+
+    private void getLocations() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("latitude", mCurrentLocation.getLatitude());
+            jsonObject.accumulate("longitude", mCurrentLocation.getLongitude());
+            HttpHelper helper = new HttpHelper(getLocationCallback());
+            helper.GET(HttpHelper.TABLE.LOCATION, jsonObject);
+        }catch (JSONException je) {
+            je.printStackTrace();
+        }
+    }
+
+    private void setMarkers() {
+        if(mResponse != null) {
+            try {
+                int len = mResponse.length();
+                for (int i = 0; i != len; ++i) {
+                    // make markers
+                    JSONObject jsonLocation = (JSONObject) mResponse.get(i);
+                    String user_id = jsonLocation.get("user_id").toString();
+                    String name = jsonLocation.get("firstname").toString() + " " + jsonLocation.get("lastname").toString();
+                    LatLng location =  new LatLng(Double.parseDouble(jsonLocation.get("latitude").toString()),
+                            Double.parseDouble(jsonLocation.get("longitude").toString()));
+                    if (mMarkerHashMap.get(user_id) == null) {
+                        MarkerOptions markOps = new MarkerOptions().position(location).title(name);
+                        mMarkerHashMap.put(user_id, mMap.addMarker(markOps));
+                    } else {
+                        Marker mark = mMarkerHashMap.get(user_id);
+                        mark.setPosition(location);
+                    }
+                }
+            } catch (JSONException je) {
+            }
+        }
+    }
+
+    private Handler.Callback getLocationCallback() {
+        final Handler.Callback callback = new Handler.Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                try {
+                    mResponse = new JSONArray(response);
+                    setMarkers();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("LIST OF LOCATIONS!!", response);
+                return true;
+            }
+        };
+        return callback;
+    }
 }

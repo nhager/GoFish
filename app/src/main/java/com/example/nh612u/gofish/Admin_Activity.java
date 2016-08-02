@@ -92,5 +92,14 @@ public class Admin_Activity extends AppCompatActivity {
                 startActivity(new Intent(Admin_Activity.this, InventoryActivity.class));
             }
         });
+
+        final Button locationButton = (Button) findViewById(R.id.locationButton);
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Admin_Activity.this, MapViewActivity.class));
+            }
+        });
+
     }
 }

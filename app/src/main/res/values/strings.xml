@@ -34,5 +34,6 @@
     <string name="title_activity_inventory">InventoryActivity</string>
     <string name="title_activity_assign_item_activitu">AssignItemActivity</string>
     <string name="title_activity_create_item">CreateItemActivity</string>
+    <string name="locations">People Locator</string>
 
 </resources>

@@ -4,8 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -14,13 +16,18 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by jc4101 on 7/29/2016.
  */
 public class LocationService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private GoogleApiClient mGoogleApiClient;
-
+    private String mUserId;
     private Location mCurrentLocation;
     private LocationRequest mLocationRequest;
 
@@ -37,6 +44,8 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     public int onStartCommand(Intent intent, int flags, int startId) {
         buildGoogleApiClient();
         mGoogleApiClient.connect();
+        mUserId = intent.getStringExtra("id");
+
         // If we get killed, after returning from here, restart
         return START_STICKY;
     }
@@ -46,6 +55,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         if (mCurrentLocation == null) {
             try {
                 mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                updateLocation((float) mCurrentLocation.getLatitude(), (float) mCurrentLocation.getLongitude());
                 Log.i("LOCATIONSERVICE", "Latitude: " + mCurrentLocation.getLatitude() + " Longitude: " + mCurrentLocation.getLongitude());
                 // TODO: API call to update table
             } catch (SecurityException se) {
@@ -64,7 +74,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
-        // API call to update table
+        updateLocation((float) mCurrentLocation.getLatitude(), (float) mCurrentLocation.getLongitude());
     }
 
     @Override
@@ -101,4 +111,31 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
+
+
+    private void updateLocation(float latitude, float longitude) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("user_id", Integer.valueOf(mUserId));
+            jsonObject.accumulate("latitude", latitude);
+            jsonObject.accumulate("longitude", longitude);
+            HttpHelper helper = new HttpHelper(getCreateLocationCallback());
+            helper.POST(getApplicationContext(), HttpHelper.TABLE.LOCATION, jsonObject);
+        }catch (JSONException je) {
+            je.printStackTrace();
+        }catch ( UnsupportedEncodingException uee) {
+            uee.printStackTrace();
+        }
+    }
+
+    private Handler.Callback getCreateLocationCallback() {
+        final Handler.Callback callback = new Handler.Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                return true;
+            }
+        };
+        return callback;
+    }
 }
