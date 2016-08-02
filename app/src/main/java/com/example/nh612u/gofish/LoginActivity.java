@@ -102,7 +102,6 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     retval = 2;
                 }
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
