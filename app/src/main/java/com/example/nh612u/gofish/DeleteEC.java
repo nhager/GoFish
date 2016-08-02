@@ -85,7 +85,6 @@ public class DeleteEC extends AppCompatActivity {
                             "User not found.", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    Log.wtf("Testing", response);
                     spinnerArray.add(jsonObj.getString(DBHelper.FeedEntry.COLUMN_NAME_EMAIL) + " " +
                             jsonObj.getString(DBHelper.FeedEntry.COLUMN_NAME_FIRST) + " "
                             + jsonObj.getString(DBHelper.FeedEntry.COLUMN_NAME_LAST));
