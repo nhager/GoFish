@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AssignItemActivity"
-    tools:showIn="@layout/activity_assign_item_activitu">
+    tools:showIn="@layout/activity_assign_item_activity">
 
     <TextView
         android:layout_width="wrap_content"
