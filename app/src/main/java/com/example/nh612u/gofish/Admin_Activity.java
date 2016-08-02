@@ -69,7 +69,19 @@ public class Admin_Activity extends AppCompatActivity {
         try {
             eventViewButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    startActivity(new Intent(Admin_Activity.this, DeleteEventActivity.class));
+                    startActivity(new Intent(Admin_Activity.this, ViewEvents.class));
+                }
+
+            });
+        } catch(NullPointerException e) {
+            Log.wtf("Error:", "Null Pointer Exception thrown");
+        }
+
+        final Button eventJoinButton = (Button) findViewById(R.id.joinEvent);
+        try {
+            eventJoinButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(Admin_Activity.this, JoinEvent.class));
                 }
 
             });

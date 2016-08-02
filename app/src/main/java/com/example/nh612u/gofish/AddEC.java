@@ -102,7 +102,6 @@ public class AddEC extends AppCompatActivity {
                 jsonObject.accumulate("zip", information[5]);
                 jsonObject.accumulate("phone", information[6]);
                 jsonObject.accumulate("email", information[7]);
-                Log.wtf("Information", jsonObject.toString());
                 HttpHelper helper = new HttpHelper(getCreateECCallback());
                 helper.POST(getApplicationContext(), HttpHelper.TABLE.EMERGENCY_CONTACT, jsonObject);
             }

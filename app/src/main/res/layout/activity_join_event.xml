@@ -7,57 +7,53 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.nh612u.gofish.DeleteEventActivity">
+    tools:context="com.example.nh612u.gofish.JoinEvent">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="By_ID:"
-        android:id="@+id/labelDelete"
-        android:layout_marginTop="104dp"
+        android:text="EVENT ID"
+        android:id="@+id/labelID123"
+        android:layout_marginTop="165dp"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/labelName"
-        android:layout_alignStart="@+id/labelName" />
+        android:layout_alignRight="@+id/joinButton"
+        android:layout_alignEnd="@+id/joinButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete Event"
-        android:id="@+id/deleteEventBtn"
-        android:layout_alignParentBottom="true"
+        android:text="JOIN"
+        android:id="@+id/joinButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="85dp" />
+        android:layout_marginTop="97dp"
+        android:layout_below="@+id/labelID123" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="By_Name:"
-        android:id="@+id/labelName"
-        android:layout_marginTop="39dp"
-        android:layout_below="@+id/deleteByID"
-        android:layout_toLeftOf="@+id/deleteEventBtn"
-        android:layout_toStartOf="@+id/deleteEventBtn" />
+        android:text="USER ID"
+        android:id="@+id/userlabelid123"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="numberSigned"
         android:ems="10"
-        android:id="@+id/deleteByID"
-        android:layout_alignTop="@+id/labelDelete"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:id="@+id/userID123"
+        android:layout_below="@+id/userlabelid123"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="numberSigned"
         android:ems="10"
-        android:id="@+id/deleteByName"
-        android:layout_alignTop="@+id/labelName"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:id="@+id/eventID123"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

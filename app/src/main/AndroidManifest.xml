@@ -40,7 +40,7 @@
         <activity android:name=".DeleteActivity" />
         <activity android:name=".Admin_Activity" />
         <activity android:name=".MapMainActivity" />
-        <activity android:name=".MapAddMarkerActivity"></activity>
+        <activity android:name=".MapAddMarkerActivity" />
         <activity
             android:name=".InventoryActivity"
             android:label="@string/title_activity_inventory"
@@ -54,10 +54,12 @@
             android:label="@string/title_activity_create_item"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CreateEventActivity" />
-        <activity android:name=".DeleteEventActivity"></activity>
+        <activity android:name=".DeleteEventActivity" />
         <activity android:name=".Veteran_Activity" />
-        <activity android:name=".DeleteEC"></activity>
-        <activity android:name=".AddEC"></activity>
+        <activity android:name=".DeleteEC" />
+        <activity android:name=".AddEC" />
+        <activity android:name=".JoinEvent" />
+        <activity android:name=".ViewEvents"></activity>
     </application>
 
 </manifest>

@@ -17,33 +17,40 @@ import java.io.UnsupportedEncodingException;
 public class DeleteEventActivity extends AppCompatActivity {
 
     private String eventValue = null;
-    private Button eventDeleteId = null;
-    private Button eventDeleteName = null;
+    private Button eventDelete = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_event);
-        eventDeleteId = (Button) findViewById(R.id.btnEventId);
-        setDeleteIdOnClickListener();
-
-        eventDeleteName = (Button) findViewById(R.id.btnEventName);
-        setDeleteNameOnClickListener();
+        eventDelete = (Button) findViewById(R.id.deleteEventBtn);
+        setDeleteOnClickListener();
 
     }
 
 
-    private void setDeleteIdOnClickListener() {
-        eventDeleteId.setOnClickListener(new View.OnClickListener() {
+    private void setDeleteOnClickListener() {
+        eventDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String finalInformation = ((EditText) findViewById(R.id.eventValue)).getText().toString();
+                String finalInformation;
+
+                if ( ((EditText) findViewById(R.id.deleteByID)).getText().toString() != ""){
+                    finalInformation =  ((EditText) findViewById(R.id.deleteByID)).getText().toString();
+                }
+                else {
+                    finalInformation =  ((EditText) findViewById(R.id.deleteByName)).getText().toString();
+                }
 
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("event_id", finalInformation);
-
+                    if ( ((EditText) findViewById(R.id.deleteByID)).getText().toString() != ""){
+                        jsonObject.accumulate("event_id", finalInformation);
+                    }
+                    else {
+                        jsonObject.accumulate("event_name", finalInformation);
+                    }
                     HttpHelper httpHelper = new HttpHelper(getDeleteEventCallback());
                     httpHelper.DELETE(getApplicationContext(), HttpHelper.TABLE.EVENT, jsonObject);
                 } catch (JSONException e) {
@@ -55,27 +62,6 @@ public class DeleteEventActivity extends AppCompatActivity {
         });
     }
 
-
-    private void setDeleteNameOnClickListener() {
-        eventDeleteName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String finalInformation = ((EditText) findViewById(R.id.eventValue)).getText().toString();
-
-                try {
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("event_name", finalInformation);
-
-                    HttpHelper httpHelper = new HttpHelper(getDeleteEventCallback());
-                    httpHelper.DELETE(getApplicationContext(), HttpHelper.TABLE.EVENT, jsonObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     private Handler.Callback getDeleteEventCallback() {
         final Handler.Callback callback = new Handler.Callback() {
