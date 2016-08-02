@@ -1,7 +1,5 @@
 package com.example.nh612u.gofish;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -22,11 +20,9 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class DeleteEventActivity extends AppCompatActivity {
-
     private String event_id_to_delete = "-1";
 
     @Override
@@ -80,6 +76,7 @@ public class DeleteEventActivity extends AppCompatActivity {
         };
         return callback;
     }
+
 
     private Handler.Callback getDeleteEventCallback() {
         final Handler.Callback callback = new Handler.Callback() {
