@@ -27,6 +27,6 @@
     <string name="title_activity_login">Login</string>
     <string name="title_activity_register_user_2">Sign up</string>
     <string name="title_activity_inventory">InventoryActivity</string>
-    <string name="title_activity_assign_item_activitu">AssignItemActivitu</string>
+    <string name="title_activity_assign_item_activitu">AssignItemActivity</string>
     <string name="title_activity_create_item">CreateItemActivity</string>
 </resources>

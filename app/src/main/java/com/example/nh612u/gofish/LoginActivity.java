@@ -6,7 +6,6 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
                     password = ((EditText) findViewById(R.id.loginPassword)).getText().toString();
                     HttpHelper httpHelper = new HttpHelper(callback);
                     JSONObject jsonObject = new JSONObject();
-
                     try {
                         jsonObject.accumulate("email", email)
                                 .accumulate("password", password);
@@ -107,6 +105,8 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             return retval;

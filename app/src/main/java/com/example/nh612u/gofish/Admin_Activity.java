@@ -40,8 +40,6 @@ public class Admin_Activity extends AppCompatActivity {
             Log.wtf("Error:", "Null Pointer Exception thrown");
         }
 
-
-
         // Jon event stuff
         final Button eventAddButton = (Button) findViewById(R.id.createEvent);
         try {
@@ -91,8 +89,20 @@ public class Admin_Activity extends AppCompatActivity {
             Log.wtf("Error:", "Null Pointer Exception thrown");
         }
 
+        final Button mapButton = (Button) findViewById(R.id.viewMap);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Admin_Activity.this, MapMainActivity.class));
+            }
+        });
 
-
-
+        final Button inventoryButton = (Button) findViewById(R.id.inventoryButton);
+        inventoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Admin_Activity.this, InventoryActivity.class));
+            }
+        });
     }
 }
