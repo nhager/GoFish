@@ -90,6 +90,7 @@ public class JoinEvent extends AppCompatActivity {
 
             }
         });
+        getAllEvents();
     }
     private boolean addItems(String response) {
         boolean retval = false;
@@ -105,7 +106,6 @@ public class JoinEvent extends AppCompatActivity {
                             "Event not found.", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-
                     spinnerArray.add(jsonObj.getString("event_id") + " "
                             + jsonObj.getString("event_name") + " "
                             + jsonObj.getString("event_desc"));
@@ -212,15 +212,27 @@ public class JoinEvent extends AppCompatActivity {
                 }
             }
         });
+
+
+    private void getAllEvents() {
+        HttpHelper httpHelper = new HttpHelper(getGetAllEventsCallback());
+        httpHelper.GET(HttpHelper.TABLE.EVENTS, new JSONObject());
     }
 
 
-    private Handler.Callback getJoinEventCallback() {
+    private Handler.Callback getGetAllEventsCallback() {
         final Handler.Callback callback = new Handler.Callback() {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                startActivity(new Intent(JoinEvent.this, Admin_Activity.class));
+                if (response == null || response.contains("error") ||
+                        response.contains("message")) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            response, Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+
+                }
                 return true;
             }
         };

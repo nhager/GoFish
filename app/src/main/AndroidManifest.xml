@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-sdk
+        android:maxSdkVersion="23"
+        android:minSdkVersion="19" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -38,7 +42,7 @@
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".DeleteActivity" />
-        <activity android:name=".Admin_Activity" />
+        <activity android:name=".AdminViewActivity" />
         <activity android:name=".MapMainActivity" />
         <activity android:name=".MapAddMarkerActivity" />
         <activity

@@ -1,65 +1,80 @@
 package com.example.nh612u.gofish;
 
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DeleteEventActivity extends AppCompatActivity {
-
-    private String eventValue = null;
-    private Button eventDelete = null;
-
+    private String event_id_to_delete = "-1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_event);
-        eventDelete = (Button) findViewById(R.id.deleteEventBtn);
-        setDeleteOnClickListener();
-
+        getAllEvents();
+        setDeleteButtonListener();
     }
 
+    private void getAllEvents() {
+        HttpHelper httpHelper = new HttpHelper(getGetAllEventsCallback());
+        httpHelper.GET(HttpHelper.TABLE.EVENTS, new JSONObject());
+    }
 
-    private void setDeleteOnClickListener() {
-        eventDelete.setOnClickListener(new View.OnClickListener() {
+    private void setDeleteButtonListener() {
+        final Button deleteButton = (Button) findViewById(R.id.eventDeleteButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String finalInformation;
-
-                if ( ((EditText) findViewById(R.id.deleteByID)).getText().toString() != ""){
-                    finalInformation =  ((EditText) findViewById(R.id.deleteByID)).getText().toString();
-                }
-                else {
-                    finalInformation =  ((EditText) findViewById(R.id.deleteByName)).getText().toString();
-                }
-
                 try {
-                    JSONObject jsonObject = new JSONObject();
-                    if ( ((EditText) findViewById(R.id.deleteByID)).getText().toString() != ""){
-                        jsonObject.accumulate("event_id", finalInformation);
-                    }
-                    else {
-                        jsonObject.accumulate("event_name", finalInformation);
-                    }
                     HttpHelper httpHelper = new HttpHelper(getDeleteEventCallback());
-                    httpHelper.DELETE(getApplicationContext(), HttpHelper.TABLE.EVENT, jsonObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.accumulate("event_id", event_id_to_delete);
+                    httpHelper.DELETE(DeleteEventActivity.this, HttpHelper.TABLE.EVENT,
+                            jsonObject);
                 } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    private Handler.Callback getGetAllEventsCallback() {
+        final Handler.Callback callback = new Handler.Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                if (response == null || response.contains("error") ||
+                        response.contains("message")) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            response, Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    populateListViewWithEvents(response);
+                }
+                return true;
+            }
+        };
+        return callback;
     }
 
 
@@ -68,13 +83,56 @@ public class DeleteEventActivity extends AppCompatActivity {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                startActivity(new Intent(DeleteEventActivity.this, Admin_Activity.class));
+                if (response == null || response.contains("error") ||
+                        response.contains("message")) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            response, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                finish();
+                startActivity(getIntent());
                 return true;
             }
         };
         return callback;
     }
 
-
-
+    private void populateListViewWithEvents(final String response) {
+        final List<Integer> eventIds = new ArrayList<Integer>();
+        try {
+            List<String> itemList = new ArrayList<String>();
+            JSONArray jsonArray = new JSONArray(response);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                final String row = "Name: " + jsonObject.get("event_name").toString();
+                itemList.add(row);
+                final Integer eventId = (Integer) jsonObject.get("event_id");
+                eventIds.add(eventId);
+            }
+            System.out.println(Arrays.toString(eventIds.toArray()));
+            if (itemList.isEmpty()) {
+                TextView text = (TextView) findViewById(R.id.eventDeleteText);
+                text.setText("There are no events to delete.");
+                return;
+            }
+            ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(DeleteEventActivity.this,
+                    android.R.layout.simple_list_item_1, itemList);
+            ListView lvItemList = (ListView) findViewById(R.id.eventDeleteList);
+            lvItemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    for (int i = 0; i < parent.getChildCount(); i++) {
+                        parent.getChildAt(i).setBackgroundColor(Color.WHITE);
+                    }
+                    view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    event_id_to_delete = "";
+                    event_id_to_delete += eventIds.get(position);
+                }
+            });
+            lvItemList.setAdapter(itemAdapter);
+        } catch (JSONException e) {
+            e.printStackTrace();;
+        }
+    }
 }
+

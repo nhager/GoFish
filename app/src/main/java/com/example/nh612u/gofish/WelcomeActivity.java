@@ -23,6 +23,9 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         final Button signUpButton = (Button) findViewById(R.id.button3);
         final Button loginButton = (Button) findViewById(R.id.button4);
+        /*
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        */
 
 
         signUpButton.setOnClickListener(new View.OnClickListener() {

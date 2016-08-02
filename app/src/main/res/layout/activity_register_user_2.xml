@@ -171,8 +171,8 @@
         android:layout_height="wrap_content"
         android:text="Register"
         android:id="@+id/registerUserButton"
+        android:layout_marginBottom="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="34dp" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

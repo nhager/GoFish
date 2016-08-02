@@ -1,63 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.nh612u.gofish.DeleteEventActivity">
-
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
     <TextView
+        android:id="@+id/eventDeleteText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true">
+    </TextView>
+
+    <ListView
+        android:id="@+id/eventDeleteList"
+        android:stackFromBottom="false"
+        android:descendantFocusability="blocksDescendants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="By_ID:"
-        android:id="@+id/labelDelete"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="20dip"
+        android:layout_marginBottom="2dip"
+        android:layout_below="@+id/textView2"
+        android:layout_above="@+id/eventDeleteButton"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/labelName"
-        android:layout_alignStart="@+id/labelName" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/eventDeleteButton"
         android:text="Delete Event"
-        android:id="@+id/deleteEventBtn"
-        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="85dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="By_Name:"
-        android:id="@+id/labelName"
-        android:layout_marginTop="39dp"
-        android:layout_below="@+id/deleteByID"
-        android:layout_toLeftOf="@+id/deleteEventBtn"
-        android:layout_toStartOf="@+id/deleteEventBtn" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/deleteByID"
-        android:layout_alignTop="@+id/labelDelete"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/deleteByName"
-        android:layout_alignTop="@+id/labelName"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
+        android:layout_alignParentBottom="true">
+    </Button>
 </RelativeLayout>

@@ -35,9 +35,9 @@ public class HttpHelper {
     public enum TABLE {
         USER,
         EVENT,
+        EVENTS,
         EMERGENCY_CONTACT,
         EVENT_SIGNUP,
-        EVENTS,
         MAP_MARKER,
         USERS,
         ITEM;
@@ -122,6 +122,7 @@ public class HttpHelper {
         final String urlString = buildURLString_POST(tableEnum);
         StringEntity entity = new StringEntity(jsonObject.toString());
         entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        System.out.println("________DELETE___________");
         client.delete(context, urlString, entity, "application/json", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -177,14 +178,14 @@ public class HttpHelper {
                 return "user";
             case EVENT:
                 return "event";
+            case EVENTS:
+                return "events";
             case EMERGENCY_CONTACT:
                 return "emergency_contact";
             case EVENT_SIGNUP:
                 return "event_signup";
             case MAP_MARKER:
                 return "map_marker";
-            case EVENTS:
-                return "events";
             case USERS:
                 return "users";
             case ITEM:

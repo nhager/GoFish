@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 final String response = bundle.getString("response");
                 int retVal = isLoginSuccessful(response);
                 if (retVal == 1) {
-                    Intent intent = new Intent(getBaseContext(), Admin_Activity.class);
+                    Intent intent = new Intent(getBaseContext(), AdminViewActivity.class);
                     intent.putExtra("email", email);
                     intent.putExtra("id", id);
                     intent.putExtra("role", "Admin");
@@ -104,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     retval = 2;
                 }
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
