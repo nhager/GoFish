@@ -35,8 +35,13 @@ public class ViewEvents extends AppCompatActivity {
 
         refreshViewEvents = (Button) findViewById(R.id.refreshViewEvents);
         setRefreshButtonOnClickListener();
+        String id2 = null;
+        Bundle email = getIntent().getExtras();
+        if (email != null) {
+            id2 = email.getString("id");
+            ((EditText) findViewById(R.id.queryUID)).setText(id2);
+        }
     }
-
 
     private void setRefreshButtonOnClickListener() {
         refreshViewEvents.setOnClickListener(new View.OnClickListener() {

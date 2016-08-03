@@ -121,14 +121,29 @@ public class AdminViewActivity extends AppCompatActivity {
                         startActivity(new Intent(AdminViewActivity.this, CreateEventActivity.class));
                     }
                     if (childPosition == 1) {
-                        startActivity(IntentHelper.createNewIntent(getIntent(), AdminViewActivity.this,
-                                JoinEvent.class));
+                        Intent intent = new Intent(AdminViewActivity.this, JoinEvent.class);
+                        Bundle bundle = getIntent().getExtras();
+                        if (bundle != null) {
+                            intent.putExtra("email", bundle.getString("email"));
+                            intent.putExtra("id", bundle.getString("user_id"));
+                            intent.putExtra("role", bundle.getString("role"));
+                            startActivity(intent);
+                        }
+                        //startActivity(IntentHelper.createNewIntent(getIntent(), AdminViewActivity.this,
+                        //        JoinEvent.class));
                     }
                     if (childPosition == 2) {
                         startActivity(new Intent(AdminViewActivity.this, DeleteEventActivity.class));
                     }
                     if (childPosition == 3) {
-                        startActivity(new Intent(AdminViewActivity.this, ViewEvents.class));
+                        Intent intent = new Intent(AdminViewActivity.this, ViewEvents.class);
+                        Bundle bundle = getIntent().getExtras();
+                        if (bundle != null) {
+                            intent.putExtra("email", bundle.getString("email"));
+                            intent.putExtra("id", bundle.getString("user_id"));
+                            intent.putExtra("role", bundle.getString("role"));
+                            startActivity(intent);
+                        }
                     }
                 }
                 return false;

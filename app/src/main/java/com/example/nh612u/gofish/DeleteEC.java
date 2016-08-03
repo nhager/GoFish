@@ -112,7 +112,7 @@ public class DeleteEC extends AppCompatActivity {
                     for(int k = 0; k < a.getChildCount(); k++){
                         a.getChildAt(k).setBackgroundColor(Color.WHITE);
                     }
-                    v.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    v.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     selected = i;
                 }
             });

@@ -67,7 +67,7 @@ public class JoinEvent extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.accumulate("event_id", id);
-                    jsonObject.accumulate("user_id", getIntent().getExtras().getString("user_id"));
+                    jsonObject.accumulate("user_id", getIntent().getExtras().getString("id"));
                     HttpHelper httpHelper = new HttpHelper(getJoinEventCallback());
                     httpHelper.POST(getApplicationContext(), HttpHelper.TABLE.EVENT_SIGNUP, jsonObject);
                 } catch (JSONException e) {
@@ -162,8 +162,7 @@ public class JoinEvent extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Joined Event.", Toast.LENGTH_SHORT);
                 toast.show();
-                startActivity(IntentHelper.createNewIntent(getIntent(), JoinEvent.this,
-                        AdminViewActivity.class));
+                onBackPressed();
                 return true;
             }
         };
