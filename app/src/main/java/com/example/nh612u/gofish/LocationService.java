@@ -116,11 +116,13 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     private void updateLocation(float latitude, float longitude) {
         try {
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("firstname", "Demo");
+            jsonObject.accumulate("lastname", "Man");
             jsonObject.accumulate("user_id", Integer.valueOf(mUserId));
             jsonObject.accumulate("latitude", latitude);
             jsonObject.accumulate("longitude", longitude);
             HttpHelper helper = new HttpHelper(getCreateLocationCallback());
-            helper.POST(getApplicationContext(), HttpHelper.TABLE.LOCATION, jsonObject);
+            helper.POST(LocationService.this, HttpHelper.TABLE.LOCATION, jsonObject);
         }catch (JSONException je) {
             je.printStackTrace();
         }catch ( UnsupportedEncodingException uee) {

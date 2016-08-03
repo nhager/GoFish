@@ -2,16 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nh612u.gofish">
 
+    <uses-sdk
+        android:maxSdkVersion="23"
+        android:minSdkVersion="19" />
+
     <!-- Permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-sdk
-        android:maxSdkVersion="23"
-        android:minSdkVersion="19" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +24,8 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCQd8--jEyRSLhqTehYcYAcLYpE8q2VALE" />
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".WelcomeActivity"
@@ -34,18 +36,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".LocationService" android:stopWithTask="true"/>
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDrgDtaqq5xzQy1NYbPlZ4uAwYZDj7O9y4" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+        <service
+            android:name=".LocationService"
+            android:stopWithTask="true" />
 
-        <activity
-            android:name=".MapViewActivity"
-            android:label="@string/title_activity_map_view"/>
         <activity
             android:name=".RegisterUserActivity"
             android:label="Register User" />
@@ -75,7 +70,8 @@
         <activity android:name=".DeleteEC" />
         <activity android:name=".AddEC" />
         <activity android:name=".JoinEvent" />
-        <activity android:name=".ViewEvents"></activity>
+        <activity android:name=".ViewEvents" />
+        <activity android:name=".LocationViewActivity"/>
     </application>
 
 </manifest>

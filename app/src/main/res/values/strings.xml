@@ -35,5 +35,7 @@
     <string name="title_activity_assign_item_activitu">AssignItemActivity</string>
     <string name="title_activity_create_item">CreateItemActivity</string>
     <string name="locations">People Locator</string>
+    <string name="view_nearby_people">View Nearby People</string>
+    <string name="title_activity_location_view">LocationView</string>
 
 </resources>

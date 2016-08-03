@@ -71,12 +71,20 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("id", id);
                     intent.putExtra("role", "Admin");
                     startActivity(intent);
+
+                    Intent serviceIntent = new Intent(LoginActivity.this, LocationService.class);
+                    serviceIntent.putExtra("id", id);
+                    startService(serviceIntent);
                 } else if (retVal == 2) {
                     Intent intent = new Intent(getBaseContext(), Veteran_Activity.class);
                     intent.putExtra("email", email);
                     intent.putExtra("id", id);
                     intent.putExtra("role", "Veteran");
                     startActivity(intent);
+
+                    Intent serviceIntent = new Intent(LoginActivity.this, LocationService.class);
+                    serviceIntent.putExtra("id", id);
+                    startService(serviceIntent);
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "Email/password combination invalid.", Toast.LENGTH_SHORT);

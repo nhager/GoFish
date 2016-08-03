@@ -1,11 +1,15 @@
 package com.example.nh612u.gofish;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -16,7 +20,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -25,13 +28,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Objects;
 
-public class MapViewActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class LocationViewActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
-    private int mInterval = 10000;
+    private int mInterval = 1000;
     private Handler mHandler;
     private JSONArray mResponse;
+    private boolean zoomed = false;
+    private String mId;
 
     private GoogleApiClient mGoogleApiClient;
     private Location mCurrentLocation;
@@ -41,7 +47,12 @@ public class MapViewActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_view);
+        setContentView(R.layout.content_location_view);
+
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            mId = b.getString("id");
+        }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -53,6 +64,8 @@ public class MapViewActivity extends AppCompatActivity implements OnMapReadyCall
                     .addApi(LocationServices.API)
                     .build();
         }
+
+        doUpdate();
 
         mHandler = new Handler();
         startMapUpdate();
@@ -74,11 +87,6 @@ public class MapViewActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-        Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(39.0392,125.7625)).title("Jeff"));
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        builder.include(marker.getPosition());
-        CameraUpdate updateCenter = CameraUpdateFactory.newLatLngZoom(new LatLng(39.0392,125.7625), 15.0f);;
-        mMap.animateCamera(updateCenter);
     }
 
     Runnable mStatusChecker = new Runnable() {
@@ -107,6 +115,12 @@ public class MapViewActivity extends AppCompatActivity implements OnMapReadyCall
             if (mCurrentLocation != null) {
                 Log.i("MAPACTIVITY", "Latitude: " + mCurrentLocation.getLatitude() +
                         " Longitude: " + mCurrentLocation.getLongitude());
+                if (!zoomed) {
+                    CameraUpdate updateCenter = CameraUpdateFactory.newLatLngZoom(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 15.0f);
+                    mMap.animateCamera(updateCenter);
+                    zoomed = true;
+                    mInterval *= 10;
+                }
                 getLocations();
             }
         } catch (SecurityException se) {
@@ -116,7 +130,6 @@ public class MapViewActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onConnected(Bundle bundle) {
-
     }
 
     @Override
@@ -151,15 +164,17 @@ public class MapViewActivity extends AppCompatActivity implements OnMapReadyCall
                     // make markers
                     JSONObject jsonLocation = (JSONObject) mResponse.get(i);
                     String user_id = jsonLocation.get("user_id").toString();
-                    String name = jsonLocation.get("firstname").toString() + " " + jsonLocation.get("lastname").toString();
+                    String name = jsonLocation.get("firstname").toString() + " " + jsonLocation.get("lastname").toString() + " " + user_id;
                     LatLng location =  new LatLng(Double.parseDouble(jsonLocation.get("latitude").toString()),
                             Double.parseDouble(jsonLocation.get("longitude").toString()));
-                    if (mMarkerHashMap.get(user_id) == null) {
-                        MarkerOptions markOps = new MarkerOptions().position(location).title(name);
-                        mMarkerHashMap.put(user_id, mMap.addMarker(markOps));
-                    } else {
-                        Marker mark = mMarkerHashMap.get(user_id);
-                        mark.setPosition(location);
+                    if (!user_id.equals(mId)) {
+                        if (mMarkerHashMap.get(user_id) == null) {
+                            MarkerOptions markOps = new MarkerOptions().position(location).title(name);
+                            mMarkerHashMap.put(user_id, mMap.addMarker(markOps));
+                        } else {
+                            Marker mark = mMarkerHashMap.get(user_id);
+                            mark.setPosition(location);
+                        }
                     }
                 }
             } catch (JSONException je) {
@@ -174,6 +189,7 @@ public class MapViewActivity extends AppCompatActivity implements OnMapReadyCall
                 final String response = bundle.getString("response");
                 try {
                     mResponse = new JSONArray(response);
+//                    Toast.makeText(getApplicationContext(), "USER ID: " + mId, Toast.LENGTH_SHORT).show();
                     setMarkers();
                 } catch (JSONException e) {
                     e.printStackTrace();

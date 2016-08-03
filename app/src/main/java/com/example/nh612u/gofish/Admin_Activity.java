@@ -146,7 +146,11 @@ public class Admin_Activity extends AppCompatActivity {
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Admin_Activity.this, MapViewActivity.class));
+                Intent intent = new Intent(getBaseContext(), LocationViewActivity.class);
+                intent.putExtra("email", email);
+                intent.putExtra("id", id);
+                intent.putExtra("role", role);
+                startActivity(intent);
             }
         });
 

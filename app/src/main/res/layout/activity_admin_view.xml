@@ -79,4 +79,13 @@
         android:id="@+id/inventoryButton"
         android:layout_above="@+id/deleteUser"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/view_nearby_people"
+        android:id="@+id/locationButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/createEvent"
+        android:layout_alignStart="@+id/createEvent" />
 </RelativeLayout>
