@@ -6,7 +6,9 @@ import android.content.Intent;
 public class IntentHelper {
     public static Intent createNewIntent(Intent oldIntent, Context context, Class clazz) {
         Intent intent = new Intent(context, clazz);
-        intent.putExtras(oldIntent.getExtras());
+        if (oldIntent.getExtras() != null && oldIntent.getExtras().size() > 0) {
+            intent.putExtras(oldIntent.getExtras());
+        }
         return intent;
     }
 

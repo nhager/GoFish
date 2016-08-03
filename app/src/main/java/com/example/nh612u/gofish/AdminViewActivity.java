@@ -38,7 +38,6 @@ public class AdminViewActivity extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("user_id", getIntent().getStringExtra("user_id"));
-            System.out.println(getIntent().getStringExtra("user_id"));
             httpHelper.GET(HttpHelper.TABLE.EVENT_SIGNUP, jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -55,14 +54,20 @@ public class AdminViewActivity extends AppCompatActivity {
                             "Error retrieving event data from server.", Toast.LENGTH_LONG);
                     toast.show();
                 } else {
-                    System.out.println(response);
                     try {
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             eventSignUps.add(jsonArray.getJSONObject(i));
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    } catch (JSONException e1) {
+                        try {
+                            if (!response.contains("error") && !response.contains("message")) {
+                                JSONObject jsonObject = new JSONObject(response);
+                                eventSignUps.add(jsonObject);
+                            }
+                        } catch (JSONException e2) {
+                            e2.printStackTrace();
+                        }
                     }
                     generateView();
                 }
@@ -177,7 +182,6 @@ public class AdminViewActivity extends AppCompatActivity {
         eventFunctionalityOpts.add("Join event");
         eventFunctionalityOpts.add("Delete event");
         eventFunctionalityOpts.add("View eventSignUps");
-        // eventFunctionalityOpts.add("View map");
 
         listDataChild.put(listDataHeader.get(0), userOpts); // Header, Child data
         listDataChild.put(listDataHeader.get(1), equipOpts);

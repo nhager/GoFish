@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 
 public class MapAddMarkerActivity extends AppCompatActivity {
     private Button addMarkerButton;
@@ -26,14 +27,17 @@ public class MapAddMarkerActivity extends AppCompatActivity {
     private String fishTypeStr;
     private String fishDescriptionStr;
 
-    private int event_id = 1;
-    private int user_id = 1;
+    private String event_id = "-1";
+    private String user_id = "-1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_add_marker);
         setAddMarkerButtonListener();
+        event_id = getIntent().getExtras().getString("event_id");
+        user_id = getIntent().getExtras().getString("user_id");
+        System.out.println(event_id + " " + user_id);
     }
 
     private void setAddMarkerButtonListener() {
@@ -52,19 +56,19 @@ public class MapAddMarkerActivity extends AppCompatActivity {
                     return;
                 }
                 addNewMarker();
-                startActivity(new Intent(MapAddMarkerActivity.this, MapMainActivity.class));
+                startActivity(IntentHelper.createNewIntent(getIntent(), MapAddMarkerActivity.this,
+                        MapMainActivity.class));
             }
         });
     }
 
     private void addNewMarker() {
         Location loc = MapMainActivity.getCoordinates();
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(new LatLng(loc.getLatitude(), loc.getLongitude()));
-        markerOptions.title(fishNameStr);
-        markerOptions.snippet(fishTypeStr + "," + fishDescriptionStr);
-        markerOptions.draggable(true);
-        MapMainActivity.addMarker(markerOptions);
+        double latitude = loc.getLatitude();
+        double longitude = loc.getLongitude();
+        latitude += randomDecimal();
+        longitude += randomDecimal();
+        final String coordinates = latitude + "," + longitude;
         HttpHelper httpHelper = new HttpHelper(getCreateMapMarkerCallback());
         try {
             JSONObject jsonObject = new JSONObject();
@@ -73,13 +77,19 @@ public class MapAddMarkerActivity extends AppCompatActivity {
             jsonObject.accumulate("title", fishNameStr);
             jsonObject.accumulate("fish_type", fishTypeStr);
             jsonObject.accumulate("fish_description", fishDescriptionStr);
-            jsonObject.accumulate("coordinates", markerOptions.getPosition().toString());
+            jsonObject.accumulate("coordinates", coordinates);
             httpHelper.POST(getApplicationContext(), HttpHelper.TABLE.MAP_MARKER, jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    private double randomDecimal() {
+        Random r = new Random();
+        int ret = r.nextInt(60 + 1);
+        return (ret / 90000.0) *  (r.nextBoolean() ? 1 : -1);
     }
 
     private Handler.Callback getCreateMapMarkerCallback() {
@@ -92,6 +102,7 @@ public class MapAddMarkerActivity extends AppCompatActivity {
                             response, Toast.LENGTH_SHORT);
                     toast.show();
                 }
+                System.out.println(response);
                 return true;
             }
         };

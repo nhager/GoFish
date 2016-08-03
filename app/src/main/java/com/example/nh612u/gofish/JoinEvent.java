@@ -75,7 +75,6 @@ public class JoinEvent extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-
             }
         });
 
@@ -163,8 +162,8 @@ public class JoinEvent extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Joined Event.", Toast.LENGTH_SHORT);
                 toast.show();
-                onBackPressed();
-
+                startActivity(IntentHelper.createNewIntent(getIntent(), JoinEvent.this,
+                        AdminViewActivity.class));
                 return true;
             }
         };
