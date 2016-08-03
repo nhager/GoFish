@@ -16,10 +16,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-
     private String email;
     private String password;
-    private String id;
+    private String user_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,25 +66,23 @@ public class LoginActivity extends AppCompatActivity {
                 final String response = bundle.getString("response");
                 int retVal = isLoginSuccessful(response);
                 if (retVal == 1) {
-                    Intent intent = new Intent(getBaseContext(), Admin_Activity.class);
-                    intent.putExtra("email", email);
-                    intent.putExtra("id", id);
-                    intent.putExtra("role", "Admin");
-                    startActivity(intent);
-
                     Intent serviceIntent = new Intent(LoginActivity.this, LocationService.class);
-                    serviceIntent.putExtra("id", id);
+                    serviceIntent.putExtra("user_id", user_id);
                     startService(serviceIntent);
+
+                    Intent intent = IntentHelper.createNewIntent(getBaseContext(),
+                            AdminViewActivity.class, new String[]{"email", "user_id", "role"},
+                            new String[]{email, user_id, "Admin"});
+                    startActivity(intent);
                 } else if (retVal == 2) {
-                    Intent intent = new Intent(getBaseContext(), Veteran_Activity.class);
-                    intent.putExtra("email", email);
-                    intent.putExtra("id", id);
-                    intent.putExtra("role", "Veteran");
-                    startActivity(intent);
-
                     Intent serviceIntent = new Intent(LoginActivity.this, LocationService.class);
-                    serviceIntent.putExtra("id", id);
+                    serviceIntent.putExtra("id", user_id);
                     startService(serviceIntent);
+
+                    Intent intent = IntentHelper.createNewIntent(getBaseContext(),
+                            Veteran_Activity.class, new String[]{"email", "user_id", "role"},
+                            new String[]{email, user_id, "Veteran"});
+                    startActivity(intent);
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "Email/password combination invalid.", Toast.LENGTH_SHORT);
@@ -102,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
             JSONObject jsonObj = new JSONObject(response);
             String jsonEmail = jsonObj.has("email") ? jsonObj.getString("email")  : null;
             String jsonPass = jsonObj.has("password") ? jsonObj.getString("password") : null;
-            id = jsonObj.has("user_id") ? jsonObj.getString("user_id") : null;
+            user_id = jsonObj.has("user_id") ? jsonObj.getString("user_id") : null;
             boolean isUser = jsonEmail != null && !jsonEmail.equals("") && jsonPass != null && !jsonPass.equals("")
                     && jsonEmail.equals(email) && jsonPass.equals(password);
             if(isUser){

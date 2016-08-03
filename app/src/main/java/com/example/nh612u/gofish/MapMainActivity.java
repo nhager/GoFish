@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -68,7 +69,8 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
         FAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MapMainActivity.this, MapAddMarkerActivity.class));
+                startActivity(IntentHelper.createNewIntent(getIntent(), MapMainActivity.this,
+                        MapAddMarkerActivity.class));
             }
         });
     }
@@ -129,23 +131,15 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     private void initMarkers() {
-        for (MarkerOptions marker : markerList) {
-            mMap.addMarker(marker);
-        }
         HttpHelper httpHelper = new HttpHelper(getGetMapMarkerCallback());
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("event_id", 1);
-            jsonObject.accumulate("user_id", 1);
+            jsonObject.accumulate("event_id", getIntent().getStringExtra("event_id"));
+            jsonObject.accumulate("user_id", getIntent().getStringExtra("user_id"));
             httpHelper.GET(HttpHelper.TABLE.MAP_MARKER, jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void addMarker(MarkerOptions markerOptions) {
-        mMap.addMarker(markerOptions);
-        markerList.add(markerOptions);
     }
 
     @TargetApi(23)
@@ -213,6 +207,36 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
                     Toast toast = Toast.makeText(getApplicationContext(),
                             response, Toast.LENGTH_LONG);
                     toast.show();
+                } else {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            final JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            final String coordinates = jsonObject.getString("coordinates");
+                            final String lat = coordinates.substring(0, coordinates.indexOf(","));
+                            final String lng = coordinates.substring(coordinates.indexOf(",") + 1);
+                            Double latitude = null;
+                            Double longitude = null;
+                            try {
+                                latitude = Double.valueOf(lat);
+                                longitude = Double.valueOf(lng);
+                            } catch (NumberFormatException e) {
+                                // Do Nothing
+                            }
+                            System.out.println(lat + " " + lng);
+                            if (latitude != null && longitude != null) {
+                                MarkerOptions markerOptions = new MarkerOptions();
+                                markerOptions.position(new LatLng(latitude, longitude));
+                                markerOptions.title(jsonObject.getString("title"));
+                                markerOptions.snippet(jsonObject.getString("fish_type") + "," +
+                                        jsonObject.getString("fish_description"));
+                                markerOptions.draggable(true);
+                                mMap.addMarker(markerOptions);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
                 return true;
             }

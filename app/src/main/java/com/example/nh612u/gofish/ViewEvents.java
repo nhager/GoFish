@@ -64,7 +64,7 @@ public class ViewEvents extends AppCompatActivity {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                //startActivity(new Intent(JoinEvent.this, Admin_Activity.class));
+                //startActivity(new Intent(JoinEvent.this, AdminViewActivity.class));
 
                 addItems(response);
 

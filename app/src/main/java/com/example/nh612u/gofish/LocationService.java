@@ -44,7 +44,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     public int onStartCommand(Intent intent, int flags, int startId) {
         buildGoogleApiClient();
         mGoogleApiClient.connect();
-        mUserId = intent.getStringExtra("id");
+        mUserId = intent.getStringExtra("user_id");
 
         // If we get killed, after returning from here, restart
         return START_STICKY;

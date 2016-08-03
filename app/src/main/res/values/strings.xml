@@ -21,7 +21,7 @@
     <string name="delete_user">Delete user</string>
     <string name="delete_EC">Delete Contact</string>
     <string name="create_user">Create user</string>
-    <string name="welcome">Welome to GoFish!</string>
+    <string name="welcome">Welcome to GoFish!</string>
     <string name="deleteEC">Delete Emergency Contact</string>
     <string name="addEC">Add Emergency Contact</string>
     <string-array name="user_roles">
