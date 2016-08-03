@@ -8,5 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="5sp"
+        android:paddingLeft="10sp" />
 </RelativeLayout>

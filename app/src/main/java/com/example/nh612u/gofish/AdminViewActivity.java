@@ -29,7 +29,7 @@ public class AdminViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_admin_view);
 
-        // get the listview
+        // get listview
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
 
         // preparing list data
@@ -62,26 +62,33 @@ public class AdminViewActivity extends AppCompatActivity {
                         startActivity(new Intent(AdminViewActivity.this, CreateEventActivity.class));
                     }
                     if (childPosition == 1) {
-                        startActivity(new Intent(AdminViewActivity.this, JoinEvent.class));
+                        startActivity(new Intent(AdminViewActivity.this, DeleteEventActivity.class));
                     }
                     if (childPosition == 2) {
                         startActivity(new Intent(AdminViewActivity.this, DeleteEventActivity.class));
                     }
                     if (childPosition == 3) {
-                        startActivity(new Intent(AdminViewActivity.this, ViewEvents.class));
-                    }
-                    if (childPosition == 4) {
                         startActivity(new Intent(AdminViewActivity.this, MapMainActivity.class));
                     }
                 }
                 return false;
             }
         });
+
+        expListView.setOnGroupExpandListener(new OnGroupExpandListener() {
+            int previousItem = -1;
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if(groupPosition != previousItem )
+                    expListView.collapseGroup(previousItem );
+                previousItem = groupPosition;
+            }
+        });
     }
 
-    /*
-     * Preparing the list data
-     */
+    //Preparing list data
+
     private void prepareListData() {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
@@ -101,7 +108,6 @@ public class AdminViewActivity extends AppCompatActivity {
 
         List<String> eventOpts = new ArrayList<String>();
         eventOpts.add("Create event");
-        eventOpts.add("Join event");
         eventOpts.add("Delete event");
         eventOpts.add("View events");
         eventOpts.add("View map");

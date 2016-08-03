@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="User_ID"
+        android:text="User ID"
         android:id="@+id/eventIDLabel1"
         android:layout_above="@+id/queryUID"
         android:layout_alignParentLeft="true"
