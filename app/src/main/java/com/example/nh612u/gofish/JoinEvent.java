@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -31,9 +32,8 @@ public class JoinEvent extends AppCompatActivity {
     private String event_id = null;
     private String user_id = null;
     private Button joinButton = null;
-    int selected =  -1;
-
-
+    private int selected =  -1;
+    private List<JSONObject> rows = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +109,7 @@ public class JoinEvent extends AppCompatActivity {
                     spinnerArray.add(jsonObj.getString("event_id") + " "
                             + jsonObj.getString("event_name") + " "
                             + jsonObj.getString("event_desc"));
+                    rows.add(jsonObj);
                 }
             } else if (json instanceof JSONArray){
                 JSONArray jsonObj = new JSONArray(response);
@@ -117,6 +118,7 @@ public class JoinEvent extends AppCompatActivity {
                             jsonObj.getJSONObject(i).getString("event_name")
                             + " "+ jsonObj.getJSONObject(i).
                             getString("event_desc"));
+                    rows.add(jsonObj.getJSONObject(i));
                 }
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -129,8 +131,20 @@ public class JoinEvent extends AppCompatActivity {
                     for(int k = 0; k < a.getChildCount(); k++){
                         a.getChildAt(k).setBackgroundColor(Color.WHITE);
                     }
-                    v.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    v.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     selected = i;
+                    try {
+                        final JSONObject event = rows.get(selected);
+                        TextView tvEventName = (TextView) findViewById(R.id.eventJoinNameDetail);
+                        TextView tvEventOrganizer = (TextView) findViewById(R.id.eventJoinOrganizerDetail);
+                        TextView tvEventDate = (TextView) findViewById(R.id.eventJoinDateDetail);
+                        tvEventName.setText("Name: " + event.getString("event_name").toString());
+                        tvEventOrganizer.setText("Organizer: " + event.getString("event_organizer").toString());
+                        tvEventDate.setText("Date: " + event.getString("event_date").toString() +
+                                " @ " + event.getString("event_time").toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         } catch (JSONException e) {

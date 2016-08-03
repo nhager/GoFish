@@ -1,20 +1,52 @@
 <?xml version="1.0"?>
 
 <RelativeLayout android:layout_height="fill_parent" android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <TextView android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_centerHorizontal="true" android:gravity="center_horizontal" android:text="Information about this screen." android:id="@+id/textView1"> </TextView>
-
-    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_centerHorizontal="true" android:text="Join Event" android:id="@+id/eventJoinButton" android:layout_alignParentBottom="true"> </Button>
-
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/eventJoinList"
         android:stackFromBottom="false"
         android:descendantFocusability="blocksDescendants"
-        android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp"
         android:layout_marginBottom="70dp" />
+
+    <TableLayout
+        android:id="@+id/eventJoinDetailTable"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_above="@+id/eventJoinButton">
+        <TableRow>
+            <TextView
+                android:id="@+id/eventJoinNameDetail"
+                android:textSize="20sp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/eventJoinOrganizerDetail"
+                android:textSize="20sp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/eventJoinDateDetail"
+                android:textSize="20sp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/eventJoinButton"
+        android:text="Join Event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="45dp">
+    </Button>
 
 </RelativeLayout>

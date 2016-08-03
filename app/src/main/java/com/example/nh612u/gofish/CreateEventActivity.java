@@ -77,7 +77,7 @@ public class CreateEventActivity extends AppCompatActivity {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                startActivity(new Intent(CreateEventActivity.this, Admin_Activity.class));
+                startActivity(new Intent(CreateEventActivity.this, AdminViewActivity.class));
                 return true;
             }
         };

@@ -62,12 +62,15 @@ public class AdminViewActivity extends AppCompatActivity {
                         startActivity(new Intent(AdminViewActivity.this, CreateEventActivity.class));
                     }
                     if (childPosition == 1) {
-                        startActivity(new Intent(AdminViewActivity.this, DeleteEventActivity.class));
+                        startActivity(new Intent(AdminViewActivity.this, JoinEvent.class));
                     }
                     if (childPosition == 2) {
                         startActivity(new Intent(AdminViewActivity.this, DeleteEventActivity.class));
                     }
                     if (childPosition == 3) {
+                        startActivity(new Intent(AdminViewActivity.this, ViewEvents.class));
+                    }
+                    if (childPosition == 4) {
                         startActivity(new Intent(AdminViewActivity.this, MapMainActivity.class));
                     }
                 }
@@ -98,6 +101,7 @@ public class AdminViewActivity extends AppCompatActivity {
 
         List<String> eventOpts = new ArrayList<String>();
         eventOpts.add("Create event");
+        eventOpts.add("Join event");
         eventOpts.add("Delete event");
         eventOpts.add("View events");
         eventOpts.add("View map");

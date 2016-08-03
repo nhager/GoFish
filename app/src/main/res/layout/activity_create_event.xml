@@ -129,9 +129,9 @@
         android:layout_height="wrap_content"
         android:text="Create Event"
         android:id="@+id/createEvent"
+        android:layout_marginBottom="51dp"
+        android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/eventDate"
-        android:layout_alignStart="@+id/eventDate"
-        android:layout_marginBottom="45dp" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

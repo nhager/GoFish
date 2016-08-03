@@ -16,6 +16,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class DeleteEventActivity extends AppCompatActivity {
     }
 
     private void populateListViewWithEvents(final String response) {
-        final List<Integer> eventIds = new ArrayList<Integer>();
+        final List<JSONObject> rows = new ArrayList<JSONObject>();
         try {
             List<String> itemList = new ArrayList<String>();
             JSONArray jsonArray = new JSONArray(response);
@@ -106,10 +107,9 @@ public class DeleteEventActivity extends AppCompatActivity {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 final String row = "Name: " + jsonObject.get("event_name").toString();
                 itemList.add(row);
-                final Integer eventId = (Integer) jsonObject.get("event_id");
-                eventIds.add(eventId);
+                rows.add(jsonObject);
             }
-            System.out.println(Arrays.toString(eventIds.toArray()));
+            System.out.println(Arrays.toString(rows.toArray()));
             if (itemList.isEmpty()) {
                 TextView text = (TextView) findViewById(R.id.eventDeleteText);
                 text.setText("There are no events to delete.");
@@ -124,9 +124,21 @@ public class DeleteEventActivity extends AppCompatActivity {
                     for (int i = 0; i < parent.getChildCount(); i++) {
                         parent.getChildAt(i).setBackgroundColor(Color.WHITE);
                     }
-                    view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    event_id_to_delete = "";
-                    event_id_to_delete += eventIds.get(position);
+                    view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    try {
+                        final JSONObject event = rows.get(position);
+                        event_id_to_delete = "";
+                        event_id_to_delete += event.get("event_id");
+                        TextView tvEventName = (TextView) findViewById(R.id.eventDeleteNameDetail);
+                        TextView tvEventOrganizer = (TextView) findViewById(R.id.eventDeleteOrganizerDetail);
+                        TextView tvEventDate = (TextView) findViewById(R.id.eventDeleteDateDetail);
+                        tvEventName.setText("Name: " + event.get("event_name").toString());
+                        tvEventOrganizer.setText("Organizer: " + event.get("event_organizer").toString());
+                        tvEventDate.setText("Date: " + event.get("event_date").toString() +
+                            " @ " + event.get("event_time").toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             lvItemList.setAdapter(itemAdapter);

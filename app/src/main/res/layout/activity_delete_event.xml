@@ -19,11 +19,38 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
         android:layout_marginBottom="2dip"
-        android:layout_below="@+id/textView2"
-        android:layout_above="@+id/eventDeleteButton"
+        android:layout_above="@+id/eventDeleteDetailTable"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TableLayout
+        android:id="@+id/eventDeleteDetailTable"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_above="@+id/eventDeleteButton">
+        <TableRow>
+            <TextView
+                android:id="@+id/eventDeleteNameDetail"
+                android:textSize="20sp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/eventDeleteOrganizerDetail"
+                android:textSize="20sp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/eventDeleteDateDetail"
+                android:textSize="20sp"
+                android:layout_marginLeft="15sp"
+                android:layout_marginRight="15sp" />
+        </TableRow>
+    </TableLayout>
 
     <Button
         android:id="@+id/eventDeleteButton"
@@ -31,6 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="45dp">
     </Button>
 </RelativeLayout>
