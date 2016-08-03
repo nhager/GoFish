@@ -37,6 +37,7 @@ public class HttpHelper {
         EVENT,
         EVENTS,
         EMERGENCY_CONTACT,
+        LOCATION,
         EVENT_SIGNUP,
         MAP_MARKER,
         USERS,
@@ -189,6 +190,8 @@ public class HttpHelper {
                 return "event_signup";
             case MAP_MARKER:
                 return "map_marker";
+            case LOCATION:
+                return "location";
             case USERS:
                 return "users";
             case ITEM:

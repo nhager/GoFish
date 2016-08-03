@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">GoFish</string>
+
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="title_activity_map_view">MapViewActivity</string>
+
     <string name="city">City</string>
     <string name="name">First name</string>
     <string name="last">Last name</string>
@@ -29,4 +34,8 @@
     <string name="title_activity_inventory">InventoryActivity</string>
     <string name="title_activity_assign_item_activitu">AssignItemActivity</string>
     <string name="title_activity_create_item">CreateItemActivity</string>
+    <string name="locations">People Locator</string>
+    <string name="view_nearby_people">View Nearby People</string>
+    <string name="title_activity_location_view">LocationView</string>
+
 </resources>

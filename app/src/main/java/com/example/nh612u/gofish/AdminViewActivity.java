@@ -146,6 +146,11 @@ public class AdminViewActivity extends AppCompatActivity {
                         }
                     }
                 }
+                if (groupPosition == 4) {
+                    Intent intent = new Intent(getBaseContext(), LocationViewActivity.class);
+                    intent.putExtra("id", getIntent().getStringExtra("user_id"));
+                    startActivity(intent);
+                }
                 return false;
             }
         });
@@ -173,6 +178,7 @@ public class AdminViewActivity extends AppCompatActivity {
         listDataHeader.add("Equipment");
         listDataHeader.add("Events");
         listDataHeader.add("Event Options");
+        listDataHeader.add("Map");
 
         // Adding child data
         List<String> userOpts = new ArrayList<String>();
@@ -181,6 +187,9 @@ public class AdminViewActivity extends AppCompatActivity {
 
         List<String> equipOpts = new ArrayList<String>();
         equipOpts.add("Inventory");
+
+        List<String> locationOpts = new ArrayList<String>();
+        locationOpts.add("View Map");
 
         List<String> eventOpts = new ArrayList<String>();
         try {
@@ -202,5 +211,7 @@ public class AdminViewActivity extends AppCompatActivity {
         listDataChild.put(listDataHeader.get(1), equipOpts);
         if (eventOpts != null) listDataChild.put(listDataHeader.get(2), eventOpts);
         listDataChild.put(listDataHeader.get(3), eventFunctionalityOpts);
+        listDataChild.put(listDataHeader.get(4), locationOpts);
+
     }
 }

@@ -66,11 +66,19 @@ public class LoginActivity extends AppCompatActivity {
                 final String response = bundle.getString("response");
                 int retVal = isLoginSuccessful(response);
                 if (retVal == 1) {
+                    Intent serviceIntent = new Intent(LoginActivity.this, LocationService.class);
+                    serviceIntent.putExtra("user_id", user_id);
+                    startService(serviceIntent);
+
                     Intent intent = IntentHelper.createNewIntent(getBaseContext(),
                             AdminViewActivity.class, new String[]{"email", "user_id", "role"},
                             new String[]{email, user_id, "Admin"});
                     startActivity(intent);
                 } else if (retVal == 2) {
+                    Intent serviceIntent = new Intent(LoginActivity.this, LocationService.class);
+                    serviceIntent.putExtra("id", user_id);
+                    startService(serviceIntent);
+
                     Intent intent = IntentHelper.createNewIntent(getBaseContext(),
                             Veteran_Activity.class, new String[]{"email", "user_id", "role"},
                             new String[]{email, user_id, "Veteran"});
