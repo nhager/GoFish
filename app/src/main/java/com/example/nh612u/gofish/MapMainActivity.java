@@ -135,16 +135,16 @@ public class MapMainActivity extends FragmentActivity implements OnMapReadyCallb
         HttpHelper httpHelper = new HttpHelper(getGetMapMarkerCallback());
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("event_id", 1);
-            jsonObject.accumulate("user_id", 1);
-            httpHelper.GET(HttpHelper.TABLE.MAP_MARKER, jsonObject);
+            //jsonObject.accumulate("event_id", getIntent().getStringExtra("event_id"));
+            jsonObject.accumulate("user_id", getIntent().getStringExtra("user_id"));
+            System.out.println(getIntent().getStringExtra("user_id"));
+            //httpHelper.GET(HttpHelper.TABLE.MAP_MARKER, jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     public static void addMarker(MarkerOptions markerOptions) {
-        mMap.addMarker(markerOptions);
         markerList.add(markerOptions);
     }
 

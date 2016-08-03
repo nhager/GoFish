@@ -105,7 +105,7 @@ public class DeleteEventActivity extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(response);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                final String row = "Name: " + jsonObject.get("event_name").toString();
+                final String row = jsonObject.get("event_name").toString();
                 itemList.add(row);
                 rows.add(jsonObject);
             }

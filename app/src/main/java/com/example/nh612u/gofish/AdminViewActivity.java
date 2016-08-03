@@ -17,18 +17,63 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class AdminViewActivity extends AppCompatActivity {
 
-    ExpandableListAdapter listAdapter;
-    ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
+    private List<String> listDataHeader;
+    private HashMap<String, List<String>> listDataChild;
+    private List<JSONObject> events = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_admin_view);
+        getEventsForCurrentUser();
+    }
 
+    private void getEventsForCurrentUser() {
+        HttpHelper httpHelper = new HttpHelper(getEventsCallback());
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("user_id", getIntent().getStringExtra("user_id"));
+            httpHelper.GET(HttpHelper.TABLE.EVENT, jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Handler.Callback getEventsCallback() {
+        final Handler.Callback callback = new Handler.Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                if (response == null || response.contains("error")) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Error retrieving event data from server.", Toast.LENGTH_LONG);
+                    toast.show();
+                } else {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            events.add(jsonArray.getJSONObject(i));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    generateView();
+                }
+                return true;
+            }
+        };
+        return callback;
+    }
+
+    private void generateView() {
         // get the listview
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
 
@@ -58,6 +103,11 @@ public class AdminViewActivity extends AppCompatActivity {
                     startActivity(new Intent(AdminViewActivity.this, InventoryActivity.class));
                 }
                 if (groupPosition == 2) {
+                    for (JSONObject jsonEvent : events) {
+
+                    }
+                }
+                if (groupPosition == 3) {
                     if (childPosition == 0) {
                         startActivity(new Intent(AdminViewActivity.this, CreateEventActivity.class));
                     }
@@ -71,7 +121,8 @@ public class AdminViewActivity extends AppCompatActivity {
                         startActivity(new Intent(AdminViewActivity.this, ViewEvents.class));
                     }
                     if (childPosition == 4) {
-                        startActivity(new Intent(AdminViewActivity.this, MapMainActivity.class));
+                        startActivity(IntentHelper.createNewIntent(getIntent(), AdminViewActivity.this,
+                                MapMainActivity.class));
                     }
                 }
                 return false;
@@ -90,6 +141,7 @@ public class AdminViewActivity extends AppCompatActivity {
         listDataHeader.add("Users");
         listDataHeader.add("Equipment");
         listDataHeader.add("Events");
+        listDataHeader.add("Event Options");
 
         // Adding child data
         List<String> userOpts = new ArrayList<String>();
@@ -100,14 +152,25 @@ public class AdminViewActivity extends AppCompatActivity {
         equipOpts.add("Inventory");
 
         List<String> eventOpts = new ArrayList<String>();
-        eventOpts.add("Create event");
-        eventOpts.add("Join event");
-        eventOpts.add("Delete event");
-        eventOpts.add("View events");
-        eventOpts.add("View map");
+        try {
+            for (JSONObject jsonEvent : events) {
+                eventOpts.add(jsonEvent.getString("event_name"));
+            }
+        } catch (JSONException e) {
+            eventOpts = null;
+            e.printStackTrace();
+        }
+
+        List<String> eventFunctionalityOpts = new ArrayList<String>();
+        eventFunctionalityOpts.add("Create event");
+        eventFunctionalityOpts.add("Join event");
+        eventFunctionalityOpts.add("Delete event");
+        eventFunctionalityOpts.add("View events");
+        // eventFunctionalityOpts.add("View map");
 
         listDataChild.put(listDataHeader.get(0), userOpts); // Header, Child data
         listDataChild.put(listDataHeader.get(1), equipOpts);
-        listDataChild.put(listDataHeader.get(2), eventOpts);
+        if (eventOpts != null) listDataChild.put(listDataHeader.get(2), eventOpts);
+        listDataChild.put(listDataHeader.get(3), eventFunctionalityOpts);
     }
 }
