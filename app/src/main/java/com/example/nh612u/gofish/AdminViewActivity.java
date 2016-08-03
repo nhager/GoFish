@@ -3,7 +3,7 @@ package com.example.nh612u.gofish;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import android.app.Activity;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,9 +13,6 @@ import android.widget.Toast;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +24,7 @@ public class AdminViewActivity extends AppCompatActivity {
     private ExpandableListView expListView;
     private List<String> listDataHeader;
     private HashMap<String, List<String>> listDataChild;
-    private List<JSONObject> events = new ArrayList<>();
+    private List<JSONObject> eventSignUps = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +34,18 @@ public class AdminViewActivity extends AppCompatActivity {
     }
 
     private void getEventsForCurrentUser() {
-        HttpHelper httpHelper = new HttpHelper(getEventsCallback());
+        HttpHelper httpHelper = new HttpHelper(getEventsCurrentUserHasJoined());
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("user_id", getIntent().getStringExtra("user_id"));
-            httpHelper.GET(HttpHelper.TABLE.EVENT, jsonObject);
+            System.out.println(getIntent().getStringExtra("user_id"));
+            httpHelper.GET(HttpHelper.TABLE.EVENT_SIGNUP, jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private Handler.Callback getEventsCallback() {
+    private Handler.Callback getEventsCurrentUserHasJoined() {
         final Handler.Callback callback = new Handler.Callback() {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
@@ -57,10 +55,11 @@ public class AdminViewActivity extends AppCompatActivity {
                             "Error retrieving event data from server.", Toast.LENGTH_LONG);
                     toast.show();
                 } else {
+                    System.out.println(response);
                     try {
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            events.add(jsonArray.getJSONObject(i));
+                            eventSignUps.add(jsonArray.getJSONObject(i));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -103,16 +102,22 @@ public class AdminViewActivity extends AppCompatActivity {
                     startActivity(new Intent(AdminViewActivity.this, InventoryActivity.class));
                 }
                 if (groupPosition == 2) {
-                    for (JSONObject jsonEvent : events) {
-
+                    try {
+                        System.out.println(eventSignUps.get(childPosition).getString("event_id"));
+                        getIntent().putExtra("event_id", eventSignUps.get(childPosition).getString("event_id"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                    startActivity(IntentHelper.createNewIntent(getIntent(), AdminViewActivity.this,
+                            MapMainActivity.class));
                 }
                 if (groupPosition == 3) {
                     if (childPosition == 0) {
                         startActivity(new Intent(AdminViewActivity.this, CreateEventActivity.class));
                     }
                     if (childPosition == 1) {
-                        startActivity(new Intent(AdminViewActivity.this, JoinEvent.class));
+                        startActivity(IntentHelper.createNewIntent(getIntent(), AdminViewActivity.this,
+                                JoinEvent.class));
                     }
                     if (childPosition == 2) {
                         startActivity(new Intent(AdminViewActivity.this, DeleteEventActivity.class));
@@ -120,19 +125,25 @@ public class AdminViewActivity extends AppCompatActivity {
                     if (childPosition == 3) {
                         startActivity(new Intent(AdminViewActivity.this, ViewEvents.class));
                     }
-                    if (childPosition == 4) {
-                        startActivity(IntentHelper.createNewIntent(getIntent(), AdminViewActivity.this,
-                                MapMainActivity.class));
-                    }
                 }
                 return false;
             }
         });
+
+        expListView.setOnGroupExpandListener(new OnGroupExpandListener() {
+            int previousItem = -1;
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if(groupPosition != previousItem )
+                    expListView.collapseGroup(previousItem );
+                previousItem = groupPosition;
+            }
+        });
     }
 
-    /*
-     * Preparing the list data
-     */
+    //Preparing list data
+
     private void prepareListData() {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
@@ -153,7 +164,7 @@ public class AdminViewActivity extends AppCompatActivity {
 
         List<String> eventOpts = new ArrayList<String>();
         try {
-            for (JSONObject jsonEvent : events) {
+            for (JSONObject jsonEvent : eventSignUps) {
                 eventOpts.add(jsonEvent.getString("event_name"));
             }
         } catch (JSONException e) {
@@ -165,7 +176,7 @@ public class AdminViewActivity extends AppCompatActivity {
         eventFunctionalityOpts.add("Create event");
         eventFunctionalityOpts.add("Join event");
         eventFunctionalityOpts.add("Delete event");
-        eventFunctionalityOpts.add("View events");
+        eventFunctionalityOpts.add("View eventSignUps");
         // eventFunctionalityOpts.add("View map");
 
         listDataChild.put(listDataHeader.get(0), userOpts); // Header, Child data

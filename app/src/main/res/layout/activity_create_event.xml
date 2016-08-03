@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event Description"
+        android:text="Event description"
         android:id="@+id/labelDesc"
         android:layout_below="@+id/eventName"
         android:layout_alignParentLeft="true"
@@ -30,16 +30,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event Address"
+        android:text="Event address"
         android:id="@+id/labelAddress"
         android:layout_below="@+id/eventDescription"
-        android:layout_alignRight="@+id/labelName"
-        android:layout_alignEnd="@+id/labelName" />
+        android:layout_toLeftOf="@+id/createEvent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event Organizer"
+        android:text="Event organizer"
         android:id="@+id/labelOrganizer"
         android:layout_below="@+id/eventAddress"
         android:layout_alignParentLeft="true"
@@ -48,7 +49,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event Date"
+        android:text="Event date"
         android:id="@+id/textView8"
         android:layout_below="@+id/eventOrganizer"
         android:layout_alignParentLeft="true"
@@ -72,7 +73,9 @@
         android:id="@+id/eventDate"
         android:layout_below="@+id/eventOrganizer"
         android:layout_alignLeft="@+id/eventOrganizer"
-        android:layout_alignStart="@+id/eventOrganizer" />
+        android:layout_alignStart="@+id/eventOrganizer"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -82,7 +85,9 @@
         android:id="@+id/eventOrganizer"
         android:layout_below="@+id/eventAddress"
         android:layout_alignLeft="@+id/eventAddress"
-        android:layout_alignStart="@+id/eventAddress" />
+        android:layout_alignStart="@+id/eventAddress"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -92,7 +97,9 @@
         android:id="@+id/eventAddress"
         android:layout_below="@+id/eventDescription"
         android:layout_alignLeft="@+id/eventDescription"
-        android:layout_alignStart="@+id/eventDescription" />
+        android:layout_alignStart="@+id/eventDescription"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -102,7 +109,9 @@
         android:id="@+id/eventDescription"
         android:layout_alignTop="@+id/labelDesc"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/eventName"
+        android:layout_alignStart="@+id/eventName" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -111,8 +120,9 @@
         android:ems="10"
         android:id="@+id/eventName"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/eventDescription"
-        android:layout_alignStart="@+id/eventDescription" />
+        android:layout_toRightOf="@+id/labelAddress"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -122,7 +132,9 @@
         android:id="@+id/eventTime"
         android:layout_below="@+id/eventDate"
         android:layout_alignLeft="@+id/eventDate"
-        android:layout_alignStart="@+id/eventDate" />
+        android:layout_alignStart="@+id/eventDate"
+        android:layout_alignRight="@+id/eventDate"
+        android:layout_alignEnd="@+id/eventDate" />
 
     <Button
         android:layout_width="wrap_content"

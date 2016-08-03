@@ -171,20 +171,15 @@ public class InventoryActivity extends AppCompatActivity {
                 } else {
 
                     spinnerArray.add(jsonObj.getString("item_name") + " type: " +
-                            jsonObj.getString("item_type") + " " + " Checked Out: " +
+                            jsonObj.getString("item_type") + " " + " \r\nChecked Out: " +
                             jsonObj.getString("userId") == null ? "Y":"N");
                 }
             } else if (json instanceof JSONArray){
                 JSONArray jsonObj = new JSONArray(response);
                 for(int i = 0; i < jsonObj.length(); i++){
-                    spinnerArray.add(jsonObj.getJSONObject(i).getString("item_type")+
-                            jsonObj.getJSONObject(i).getString("item_name") + " Checked Out: " +
+                    spinnerArray.add(jsonObj.getJSONObject(i).getString("item_type") + " " +
+                            jsonObj.getJSONObject(i).getString("item_name") + " \r\nChecked Out: " +
                             (jsonObj.getJSONObject(i).getString("assigned_user_id") == "" ? "Yes":"No"));
-                    /*
-                    spinnerArray.add(jsonObj.getJSONObject(i).getString("item_name") + " type: " +
-                            jsonObj.getJSONObject(i).getString("item_type") + " " + " Checked Out: " +
-                            jsonObj.getJSONObject(i).getString("assigned_user_id") == null ? "Y":"N");
-                     */
                 }
             }
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
@@ -203,13 +198,6 @@ public class InventoryActivity extends AppCompatActivity {
     //TODO: User event object instead of string.
     public String[] getEvents(){
         String[] strs = {"David Purcell","Phillp-a","Blanco"};
-        return strs;
-    }
-
-    //TODO: Get inventory from database.
-    //TODO: Item object instead of string.
-    public String[] getInventory(){
-        String[] strs = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"};
         return strs;
     }
 

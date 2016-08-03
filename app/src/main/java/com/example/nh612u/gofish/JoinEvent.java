@@ -67,19 +67,7 @@ public class JoinEvent extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.accumulate("event_id", id);
-
-                    //get userID
-                    Integer temp2 = -1;
-                    String id2 = null;
-                    Bundle email = getIntent().getExtras();
-                    if (email != null) {
-                        id2 = email.getString("id");
-                        temp2 = Integer.valueOf(id);
-                    }
-
-                    jsonObject.accumulate("user_id", temp2);
-
-
+                    jsonObject.accumulate("user_id", getIntent().getExtras().getString("user_id"));
                     HttpHelper httpHelper = new HttpHelper(getJoinEventCallback());
                     httpHelper.POST(getApplicationContext(), HttpHelper.TABLE.EVENT_SIGNUP, jsonObject);
                 } catch (JSONException e) {
@@ -90,7 +78,7 @@ public class JoinEvent extends AppCompatActivity {
 
             }
         });
-        //getAllEvents();
+
     }
     private boolean addItems(String response) {
         boolean retval = false;
@@ -171,27 +159,11 @@ public class JoinEvent extends AppCompatActivity {
             public boolean handleMessage(Message msg) {
                 Bundle bundle = msg.getData();
                 final String response = bundle.getString("response");
-                JSONObject jsonObj = null;
-                try {
-                    jsonObj = new JSONObject(response);
-                    /*
-                    if(jsonObj.get("message").equals("Deleted user.")){
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Joined Event.", Toast.LENGTH_SHORT);
-                        toast.show();
-                        onBackPressed();
-
-                    }*/
-
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Joined Event.", Toast.LENGTH_SHORT);
-                    toast.show();
-                    onBackPressed();
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                System.out.println(response);
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Joined Event.", Toast.LENGTH_SHORT);
+                toast.show();
+                onBackPressed();
 
                 return true;
             }
