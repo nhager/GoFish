@@ -38,13 +38,7 @@ public class InventoryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String[] events = getEvents();
         eventSelect = (Spinner) findViewById(R.id.eventFilterSpinner);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, events);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        eventSelect.setAdapter(dataAdapter);
-
         typeSelect = (Spinner) findViewById(R.id.typeFilterSpinner);
 
         final Button createItemButton = (Button) findViewById(R.id.createItemButton);
@@ -63,30 +57,7 @@ public class InventoryActivity extends AppCompatActivity {
             }
         });
 
-        //http://www.vogella.com/tutorials/AndroidListView/article.html#androidlists
         listView = (ListView) findViewById(R.id.inventoryList);
-        /*
-        String[] values = getInventory();
-
-        final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
-        */
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0);
-            }
-
-        });
 
         HttpHelper httpHelperType = new HttpHelper(getTypesCallback());
         JSONObject jsonObjectType = new JSONObject();
@@ -95,6 +66,10 @@ public class InventoryActivity extends AppCompatActivity {
         HttpHelper httpHelperItems = new HttpHelper(getItemsCallback());
         JSONObject jsonObjectItems = new JSONObject();
         httpHelperItems.GET(HttpHelper.TABLE.ITEMS, jsonObjectItems);
+
+        HttpHelper httpHelperEvents = new HttpHelper(getEventsCallback());
+        JSONObject jsonObjectEvents = new JSONObject();
+        httpHelperEvents.GET(HttpHelper.TABLE.EVENTS, jsonObjectEvents);
     }
     private Handler.Callback getTypesCallback() {
         final Handler.Callback callback = new Handler.Callback() {
@@ -177,14 +152,14 @@ public class InventoryActivity extends AppCompatActivity {
             } else if (json instanceof JSONArray){
                 JSONArray jsonObj = new JSONArray(response);
                 for(int i = 0; i < jsonObj.length(); i++){
-                    spinnerArray.add(jsonObj.getJSONObject(i).getString("item_type") + " " +
+                    spinnerArray.add(jsonObj.getJSONObject(i).getString("item_type") + "\t" +
                             jsonObj.getJSONObject(i).getString("item_name") + " \r\nChecked Out: " +
-                            (jsonObj.getJSONObject(i).getString("assigned_user_id") == "" ? "Yes":"No"));
+                            (jsonObj.getJSONObject(i).getString("assigned_user_id") == "null" ? "Yes":"No"));
                 }
             }
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, spinnerArray);
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    android.R.layout.simple_list_item_1, spinnerArray);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
             listView.setAdapter(dataAdapter);
 
         } catch (JSONException e) {
@@ -194,35 +169,51 @@ public class InventoryActivity extends AppCompatActivity {
         }
     }
 
-    //TODO: Get event list from database.
-    //TODO: User event object instead of string.
-    public String[] getEvents(){
-        String[] strs = {"David Purcell","Phillp-a","Blanco"};
-        return strs;
-    }
-
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
+    private Handler.Callback getEventsCallback() {
+        final Handler.Callback callback = new Handler.Callback() {
+            public boolean handleMessage(Message msg) {
+                Bundle bundle = msg.getData();
+                final String response = bundle.getString("response");
+                addEvents(response);
+                return true;
             }
-        }
+        };
+        return callback;
+    }
+    private boolean addEvents(String response) {
+        boolean retval = false;
+        try {
+            Object json = new JSONTokener(response).nextValue();
+            List<String> spinnerArray =  new ArrayList<>();
+            final Context cur = this;
+            if(json instanceof JSONObject){
+                JSONObject jsonObj = new JSONObject(response);
+                if(jsonObj.has("message") &&
+                        jsonObj.get("message").equals("User with provided parameters not found.")) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Types not found.", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
 
-        @Override
-        public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
-        }
+                    spinnerArray.add(jsonObj.getString("item_name") + " type: " +
+                            jsonObj.getString("item_type") + " " + " \r\nChecked Out: " +
+                            jsonObj.getString("userId") == null ? "Y":"N");
+                }
+            } else if (json instanceof JSONArray){
+                JSONArray jsonObj = new JSONArray(response);
+                for(int i = 0; i < jsonObj.length(); i++){
+                    spinnerArray.add(jsonObj.getJSONObject(i).getString("event_name"));
+                }
+            }
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, spinnerArray);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            eventSelect.setAdapter(dataAdapter);
 
-        @Override
-        public boolean hasStableIds() {
-            return true;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
+            return retval;
         }
-
     }
 }

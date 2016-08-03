@@ -141,7 +141,7 @@ public class AssignItemActivity extends AppCompatActivity {
 
                     spinnerArray.add(jsonObj.getString(DBHelper.FeedEntry.COLUMN_NAME_FIRST) + " "
                             + jsonObj.getString(DBHelper.FeedEntry.COLUMN_NAME_LAST) + " ID: "
-                            + jsonObj.getString(DBHelper.FeedEntry._ID));
+                            + jsonObj.getString("user_id"));
                 }
             } else if (json instanceof JSONArray){
                 JSONArray jsonObj = new JSONArray(response);
@@ -152,7 +152,7 @@ public class AssignItemActivity extends AppCompatActivity {
                             + " "+ jsonObj.getJSONObject(i).
                             getString(DBHelper.FeedEntry.COLUMN_NAME_LAST) + " ID: "
                             + jsonObj.getJSONObject(i).
-                            getString(DBHelper.FeedEntry.COLUMN_NAME_LAST));
+                            getString("user_id"));
                 }
             }
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
