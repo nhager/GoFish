@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (retVal == 2) {
                     Intent serviceIntent = new Intent(LoginActivity.this, LocationService.class);
-                    serviceIntent.putExtra("id", user_id);
+                    serviceIntent.putExtra("user_id", user_id);
                     startService(serviceIntent);
 
                     Intent intent = IntentHelper.createNewIntent(getBaseContext(),

@@ -125,7 +125,7 @@ public class AdminViewActivity extends AppCompatActivity {
                         Bundle bundle = getIntent().getExtras();
                         if (bundle != null) {
                             intent.putExtra("email", bundle.getString("email"));
-                            intent.putExtra("id", bundle.getString("user_id"));
+                            intent.putExtra("user_id", bundle.getString("user_id"));
                             intent.putExtra("role", bundle.getString("role"));
                             startActivity(intent);
                         }
@@ -140,7 +140,7 @@ public class AdminViewActivity extends AppCompatActivity {
                         Bundle bundle = getIntent().getExtras();
                         if (bundle != null) {
                             intent.putExtra("email", bundle.getString("email"));
-                            intent.putExtra("id", bundle.getString("user_id"));
+                            intent.putExtra("user_id", bundle.getString("user_id"));
                             intent.putExtra("role", bundle.getString("role"));
                             startActivity(intent);
                         }

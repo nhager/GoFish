@@ -37,7 +37,7 @@ public class Veteran_Activity extends AppCompatActivity {
                 if (bundle != null) {
                     Intent intent = new Intent(getBaseContext(), AddEC.class);
                     intent.putExtra("email", bundle.getString("email"));
-                    intent.putExtra("id", bundle.getString("user_id"));
+                    intent.putExtra("user_id", bundle.getString("user_id"));
                     intent.putExtra("role", bundle.getString("role"));
                     startActivity(intent);
                 }
@@ -52,7 +52,7 @@ public class Veteran_Activity extends AppCompatActivity {
                 if (bundle != null) {
                     Intent intent = new Intent(getBaseContext(), DeleteEC.class);
                     intent.putExtra("email", bundle.getString("email"));
-                    intent.putExtra("id", bundle.getString("user_id"));
+                    intent.putExtra("user_id", bundle.getString("user_id"));
                     intent.putExtra("role", bundle.getString("role"));
                     startActivity(intent);
                 }
@@ -68,7 +68,7 @@ public class Veteran_Activity extends AppCompatActivity {
                 if (bundle != null) {
                     Intent intent = new Intent(getBaseContext(), ViewEvents.class);
                     intent.putExtra("email", bundle.getString("email"));
-                    intent.putExtra("id", bundle.getString("user_id"));
+                    intent.putExtra("user_id", bundle.getString("user_id"));
                     intent.putExtra("role", bundle.getString("role"));
                     startActivity(intent);
                 }
@@ -84,7 +84,7 @@ public class Veteran_Activity extends AppCompatActivity {
                 if (bundle != null) {
                     Intent intent = new Intent(getBaseContext(), JoinEvent.class);
                     intent.putExtra("email", bundle.getString("email"));
-                    intent.putExtra("id", bundle.getString("user_id"));
+                    intent.putExtra("user_id", bundle.getString("user_id"));
                     intent.putExtra("role", bundle.getString("role"));
                     startActivity(intent);
                 }
@@ -98,9 +98,9 @@ public class Veteran_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Bundle bundle = getIntent().getExtras();
                 if (bundle != null) {
-                    Intent intent = new Intent(getBaseContext(), MapAddMarkerActivity.class);
+                    Intent intent = new Intent(getBaseContext(), MapMainActivity.class);
                     intent.putExtra("email", bundle.getString("email"));
-                    intent.putExtra("id", bundle.getString("id"));
+                    intent.putExtra("user_id", bundle.getString("user_id"));
                     intent.putExtra("role", bundle.getString("role"));
                     startActivity(intent);
                 }

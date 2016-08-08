@@ -44,7 +44,11 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     public int onStartCommand(Intent intent, int flags, int startId) {
         buildGoogleApiClient();
         mGoogleApiClient.connect();
-        mUserId = intent.getStringExtra("user_id");
+        try {
+            mUserId = intent.getStringExtra("user_id");
+        } catch (Exception ex){
+            mUserId = "-1";
+        }
 
         // If we get killed, after returning from here, restart
         return START_STICKY;
@@ -55,8 +59,10 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         if (mCurrentLocation == null) {
             try {
                 mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-                updateLocation((float) mCurrentLocation.getLatitude(), (float) mCurrentLocation.getLongitude());
-                Log.i("LOCATIONSERVICE", "Latitude: " + mCurrentLocation.getLatitude() + " Longitude: " + mCurrentLocation.getLongitude());
+                if(mCurrentLocation != null){
+                    updateLocation((float) mCurrentLocation.getLatitude(), (float) mCurrentLocation.getLongitude());
+                    Log.i("LOCATIONSERVICE", "Latitude: " + mCurrentLocation.getLatitude() + " Longitude: " + mCurrentLocation.getLongitude());
+                }
                 // TODO: API call to update table
             } catch (SecurityException se) {
 
@@ -74,7 +80,11 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
-        updateLocation((float) mCurrentLocation.getLatitude(), (float) mCurrentLocation.getLongitude());
+        try {
+            updateLocation((float) mCurrentLocation.getLatitude(), (float) mCurrentLocation.getLongitude());
+        } catch (Exception ex){
+
+        }
     }
 
     @Override
